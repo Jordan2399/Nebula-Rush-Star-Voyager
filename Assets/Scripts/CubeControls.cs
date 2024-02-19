@@ -1,11 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CubeControls : MonoBehaviour
 {
     [SerializeField] private int movingSpeed = 2;
     [SerializeField] private Transform cubeTransform;
+    [SerializeField] private Rigidbody rigidbody;
+
+    public InputActionReference move;
+
+    private Vector2 moveDirection;
     
     // Start is called before the first frame update
     void Start()
@@ -16,11 +23,17 @@ public class CubeControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        moveDirection = move.action.ReadValue<Vector2>();
+    }
+
+    private void FixedUpdate()
+    {
+        rigidbody.velocity = new Vector2(moveDirection.x * movingSpeed, moveDirection.y * movingSpeed);
     }
 
     public void MoveUp()
     {
+        Debug.Log("Up");
         var position = cubeTransform.position;
         float y = position.y;
         y += movingSpeed/50f;
