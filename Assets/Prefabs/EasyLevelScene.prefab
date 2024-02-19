@@ -133,46 +133,6 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4e7b5189-c06b-418e-b7d0-7f3712dba950
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 56142277-2f17-4b7d-8a6e-d624b85d8a41
-    m_ActionName: UI/Submit[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a616a6dc-cb24-4cb9-8949-6ecd8c3a0ce9
-    m_ActionName: UI/Cancel[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7f3ba889-838e-464d-936c-f38f32e7491a
-    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 841916c8-369c-45e7-bd74-5ba9266dfbef
-    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5760ad6d-99c4-4d66-b8ea-aea591d971cf
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9c2a3520-245c-4382-ac06-1b6f1d023d19
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0ad3b41f-94cd-4100-9573-ab87953f6a27
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 127c838c-3672-4a36-85da-bf542535b00e
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8fc18db2-d163-4f94-ad29-1fc6a6dba3d1
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5880504324178586080}
         m_TargetAssemblyTypeName: CubeControls, Assembly-CSharp
@@ -237,7 +197,7 @@ MonoBehaviour:
     m_ActionId: 9112d6ba-5561-411f-a44c-ad4343c0ff44
     m_ActionName: Player/MoveRight[/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
