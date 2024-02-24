@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +19,6 @@ public class CubeControls : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
         objectSize = GetObjectBoundsSize();
     }
 
@@ -46,12 +44,19 @@ public class CubeControls : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Move the cube
         rigidbody.velocity = new Vector2(moveDirection.x * movingSpeed, moveDirection.y * movingSpeed);
 
-        Vector3 viewPos = transform.position;
-        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x * -1 + objectSize.x, screenBounds.x - objectSize.x);
-        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1 + objectSize.y, screenBounds.y - objectSize.y);
-        transform.position = viewPos;
+        // Calculate screen bounds dynamically considering aspect ratio
+        float screenRatio = (float)Screen.width / Screen.height;
+        float orthoSize = mainCamera.orthographicSize;
+        screenBounds = new Vector2(orthoSize * screenRatio, orthoSize);
+
+        // Clamp the cube's position to keep it within the screen bounds
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, -screenBounds.x + objectSize.x, screenBounds.x - objectSize.x);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -screenBounds.y + objectSize.y, screenBounds.y - objectSize.y);
+        transform.position = clampedPosition;
     }
 
     public void Fire()

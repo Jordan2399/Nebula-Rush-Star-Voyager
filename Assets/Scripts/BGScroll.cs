@@ -6,6 +6,7 @@ public class BGScroll : MonoBehaviour
 {
     public float speed;
     [SerializeField] private Renderer bgRenderer;
+    
     // Start is called before the first frame update
     void Start()
     {
