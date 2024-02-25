@@ -9,8 +9,12 @@ public class CubeControls : MonoBehaviour
     [SerializeField] private int movingSpeed = 2;
     [SerializeField] private Transform cubeTransform;
     [SerializeField] private Rigidbody rigidbody;
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 5f;
 
     public InputActionReference move;
+    public InputActionReference fire;
 
     private Vector2 moveDirection;
     private Camera mainCamera;
@@ -49,8 +53,10 @@ public class CubeControls : MonoBehaviour
     private void Update()
     {
         moveDirection = move.action.ReadValue<Vector2>();
-        // Check if the character is not moving
-  
+        if (fire.action.triggered)
+        {
+            Fire();
+        }
     }
 
     private void FixedUpdate()
@@ -104,7 +110,8 @@ public class CubeControls : MonoBehaviour
 
     public void Fire()
     {
-        //TODO Fire bullets
-        Debug.Log("Fire");
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.velocity = transform.up * bulletSpeed;
     }
 }
