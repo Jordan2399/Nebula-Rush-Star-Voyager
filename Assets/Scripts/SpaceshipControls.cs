@@ -80,32 +80,35 @@ public class CubeControls : MonoBehaviour
         
         
         
-        
+        // Pass the moveDirection directly to the Animator to drive the Blend Tree
+        animator.SetFloat("MoveX", moveDirection.x);
+        animator.SetFloat("MoveY", moveDirection.y);
+
+        // Logging movement for debugging
         if (moveDirection == Vector2.zero)
         {
             Debug.Log("Idle");
-            animator.SetBool("isMovingLeft", false);
-            animator.SetBool("isMovingRight", false);
         }
-        else // Character is moving
+        else
         {
-            if (moveDirection.y < 0)
+            if (moveDirection.x > 0)
             {
                 Debug.Log("Moving Right");
-                animator.SetBool("isMovingRight", true);
-                animator.SetBool("isMovingLeft", false);
             }
-            else if (moveDirection.y > 0)
+            else if (moveDirection.x < 0)
             {
                 Debug.Log("Moving Left");
-                animator.SetBool("isMovingLeft", true);
-                animator.SetBool("isMovingRight", false);
             }
-
-            // If your game doesn't require specific animations for moving up or down,
-            // you don't need to set animator booleans for vertical movement.
-            // This example assumes vertical movement does not affect the isMovingLeft or isMovingRight flags.
+            if (moveDirection.y > 0)
+            {
+                Debug.Log("Moving Up");
+            }
+            else if (moveDirection.y < 0)
+            {
+                Debug.Log("Moving Down");
+            }
         }
+
     }
 
     public void Fire()
