@@ -108,10 +108,16 @@ public class CubeControls : MonoBehaviour
         }
     }
 
-    public void Fire()
+   public void Fire()
     {
         var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        var rigidBody = bullet.GetComponent<Rigidbody2D>(); //TODO: tryGetcomponent() !!!
-        rigidBody.velocity = transform.up * bulletSpeed;
+        if (bullet.TryGetComponent<Rigidbody2D>(out var rigidBody))
+        {
+            rigidBody.velocity = transform.up * bulletSpeed;
+        }
+        else
+        {
+            Debug.LogWarning("Rigidbody2D component not found on the bullet prefab.");
+        }
     }
 }
