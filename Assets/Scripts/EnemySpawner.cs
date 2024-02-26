@@ -14,22 +14,22 @@ public class EnemySpawner : MonoBehaviour
 	private float nextSpawnTime;
 	private float userProgress;
 
-	void Start()
+	private void Start()
 	{
 		mainCamera = Camera.main; // Cache the main camera
 		nextSpawnTime = Time.time + baseSpawnRate; // Initialize the next spawn time
 	}
 
-	void Update()
+	private void Update()
 	{
 		// Simulate user progress (replace this with your actual progression logic)
 		userProgress += Time.deltaTime * 0.1f; // Adjust the multiplier as needed
 
 		// Update spawn rate based on user progress
-		float currentSpawnRate = Mathf.Max(minSpawnRate, baseSpawnRate * Mathf.Pow(progressMultiplier, userProgress));
+		var currentSpawnRate = Mathf.Max(minSpawnRate, baseSpawnRate * Mathf.Pow(progressMultiplier, userProgress));
 
 		// Check if it's time to spawn a new enemy
-		if (!isEnemySpawned && Time.time >= nextSpawnTime)
+		if (!isEnemySpawned && Time.time >= nextSpawnTime) //move this to function PrepareSpawnEnemy
 		{
 			SpawnEnemy();
 			isEnemySpawned = true;
@@ -37,20 +37,20 @@ public class EnemySpawner : MonoBehaviour
 		}
 	}
 
-	void SpawnEnemy()
+	private void SpawnEnemy()
 	{
 		// Determine the vertical bounds of the camera view
-		float screenHalfHeight = mainCamera.orthographicSize;
-		float verticalExtent = screenHalfHeight * 2f;
+		var screenHalfHeight = mainCamera.orthographicSize;
+		var verticalExtent = screenHalfHeight * 2f;
 
 		// Choose a random position within the camera view
-		float spawnX = UnityEngine.Random.Range(-screenHalfHeight, screenHalfHeight);
-		float spawnY = UnityEngine.Random.Range(-screenHalfHeight, screenHalfHeight);
+		var spawnX = UnityEngine.Random.Range(-screenHalfHeight, screenHalfHeight);
+		var spawnY = UnityEngine.Random.Range(-screenHalfHeight, screenHalfHeight);
 
 		// Calculate spawn position with an offset from the center of the screen
-		Vector3 spawnPosition = new Vector3(mainCamera.transform.position.x + spawnDistance + spawnX, spawnY, 0);
+		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnDistance + spawnX, spawnY, 0);
 
-		Quaternion enemyRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
+		var enemyRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
 		Instantiate(Enemy, spawnPosition, enemyRotation);
 	}
 
