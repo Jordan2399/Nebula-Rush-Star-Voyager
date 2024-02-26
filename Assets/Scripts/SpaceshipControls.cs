@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CubeControls : MonoBehaviour
+public class SpaceshipControls : MonoBehaviour
 {
     [SerializeField] private int movingSpeed = 2;
     [SerializeField] private Transform cubeTransform;
@@ -24,7 +24,7 @@ public class CubeControls : MonoBehaviour
     private Animator animator;
 
 
-    void Start()
+    private void Start()
     {
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
@@ -37,10 +37,10 @@ public class CubeControls : MonoBehaviour
 
     private Vector2 GetObjectBoundsSize()
     {
-        Collider collider = GetComponent<Collider>();
+        var collider = GetComponent<Collider>();
         if (collider != null)
         {
-            Bounds bounds = collider.bounds;
+            var bounds = collider.bounds;
             return new Vector2(bounds.extents.x, bounds.extents.y);
         }
         else
@@ -66,12 +66,12 @@ public class CubeControls : MonoBehaviour
         rigidbody.velocity = new Vector2(moveDirection.x * movingSpeed, moveDirection.y * movingSpeed);
 
         // Calculate screen bounds dynamically considering aspect ratio
-        float screenRatio = (float)Screen.width / Screen.height;
-        float orthoSize = mainCamera.orthographicSize;
+        var screenRatio = (float)Screen.width / Screen.height;
+        var orthoSize = mainCamera.orthographicSize;
         screenBounds = new Vector2(orthoSize * screenRatio, orthoSize);
 
         // Clamp the cube's position to keep it within the screen bounds
-        Vector3 clampedPosition = transform.position;
+        var clampedPosition = transform.position;
         clampedPosition.x =
             Mathf.Clamp(clampedPosition.x, -screenBounds.x + objectSize.x, screenBounds.x - objectSize.x);
         clampedPosition.y =
@@ -111,10 +111,16 @@ public class CubeControls : MonoBehaviour
 
     }
 
-    public void Fire()
+   public void Fire()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.velocity = transform.up * bulletSpeed;
+        var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (bullet.TryGetComponent<Rigidbody2D>(out var rigidBody))
+        {
+            rigidBody.velocity = transform.up * bulletSpeed;
+        }
+        else
+        {
+            Debug.LogWarning("Rigidbody2D component not found on the bullet prefab.");
+        }
     }
 }
