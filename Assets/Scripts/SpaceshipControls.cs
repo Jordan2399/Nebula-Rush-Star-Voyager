@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CubeControls : MonoBehaviour
+public class SpaceshipControls : MonoBehaviour
 {
     [SerializeField] private int movingSpeed = 2;
     [SerializeField] private Transform cubeTransform;
