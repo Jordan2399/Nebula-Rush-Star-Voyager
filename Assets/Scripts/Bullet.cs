@@ -11,7 +11,9 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.up * speed * Time.deltaTime);
         
         // Destroy the bullet if it goes out of the screen
-        if (!GetComponent<Renderer>().isVisible) //TODO: TryGetComponent!!!
+
+        if (!gameObject.TryGetComponent<Renderer>(out Renderer renderer) || !renderer.isVisible)
+ 
         {
             Destroy(gameObject);
         }
