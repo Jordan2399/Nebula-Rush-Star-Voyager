@@ -58,4 +58,7 @@ public class SpaceshipSpawn : MonoBehaviour
 		Quaternion enemyRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
 		Instantiate(enemyPrefab, spawnPosition, enemyRotation);
 	}
+	
+	
+
 }

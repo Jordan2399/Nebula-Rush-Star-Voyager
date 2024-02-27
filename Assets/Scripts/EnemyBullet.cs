@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
-    public float speed = 10f; // Speed of the bullet
+    public float speed = 2f; // Speed of the bullet
 
     // Update is called once per frame
     private void Update()
     {
         // Move the bullet forward
-        // transform.Translate(Vector3.up * speed * Time.deltaTime);
+        transform.Translate(Vector3.up * speed * Time.deltaTime);
         
         // Destroy the bullet if it goes out of the screen
 
@@ -22,9 +22,8 @@ public class Bullet : MonoBehaviour
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collision by Player bullet");
-        // Check if the bullet collided with an object tagged as "Enemy"
-        if (collision.CompareTag("Enemy"))
+        // Check if the bullet collided with an object tagged as "Player"
+        if (collision.CompareTag("Player"))
         {
             // Destroy the bullet upon collision with an enemy
             Destroy(gameObject);

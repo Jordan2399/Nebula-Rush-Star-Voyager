@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class SpaceshipControls : MonoBehaviour
 {
-    [SerializeField] private int movingSpeed = 2;
+    [SerializeField] private int movingSpeed = 5;
     [SerializeField] private Transform cubeTransform;
     [SerializeField] private Rigidbody rigidbody;
     public GameObject bulletPrefab;
@@ -61,8 +61,8 @@ public class SpaceshipControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("moving direction" + moveDirection);
-        // Move the cube
+        // Debug.Log("moving direction" + moveDirection);
+        // Move the cubea
         rigidbody.velocity = new Vector2(moveDirection.x * movingSpeed, moveDirection.y * movingSpeed);
 
         // Calculate screen bounds dynamically considering aspect ratio
@@ -85,29 +85,29 @@ public class SpaceshipControls : MonoBehaviour
         animator.SetFloat("MoveY", moveDirection.y);
 
         // Logging movement for debugging
-        if (moveDirection == Vector2.zero)
-        {
-            Debug.Log("Idle");
-        }
-        else
-        {
-            if (moveDirection.x > 0)
-            {
-                Debug.Log("Moving Right");
-            }
-            else if (moveDirection.x < 0)
-            {
-                Debug.Log("Moving Left");
-            }
-            if (moveDirection.y > 0)
-            {
-                Debug.Log("Moving Up");
-            }
-            else if (moveDirection.y < 0)
-            {
-                Debug.Log("Moving Down");
-            }
-        }
+        // if (moveDirection == Vector2.zero)
+        // {
+        //     Debug.Log("Idle");
+        // }
+        // else
+        // {
+        //     if (moveDirection.x > 0)
+        //     {
+        //         Debug.Log("Moving Right");
+        //     }
+        //     else if (moveDirection.x < 0)
+        //     {
+        //         Debug.Log("Moving Left");
+        //     }
+        //     if (moveDirection.y > 0)
+        //     {
+        //         Debug.Log("Moving Up");
+        //     }
+        //     else if (moveDirection.y < 0)
+        //     {
+        //         Debug.Log("Moving Down");
+        //     }
+        // }
 
     }
 
