@@ -8,7 +8,7 @@ public class EnemyMovement : MonoBehaviour
     // Set the target player for the enemy to follow
     public void SetTarget(Transform newTarget)
     {
-        UnityEngine.Debug.Log("from setTarget");
+        // UnityEngine.Debug.Log("from setTarget");
 
         target = newTarget;
     }
@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if the object collided with has the tag "PlayerBullet"
-        if (collision.CompareTag("PlayerBullet"))
+        if (collision.CompareTag("PlayerBullet") || collision.CompareTag("Player"))
         {
             // Optionally, you might want to add additional logic here
             // to handle what happens when the enemy is destroyed.
@@ -45,7 +45,10 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject);
 
             // Also, you might want to destroy the bullet to prevent it from continuing through space
-            Destroy(collision.gameObject);
+            if (collision.CompareTag("PlayerBullet"))
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 }
