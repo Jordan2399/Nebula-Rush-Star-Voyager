@@ -1,13 +1,28 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SpaceshipControls : MonoBehaviour
 {
+    [SerializeField] private Transform cubeTransform;
+
     [SerializeField] private int movingSpeed = 5;
-    [SerializeField] private Rigidbody rigidbody;
-    public GameObject bulletPrefab;
-    public Transform firePoint;
-    public float bulletSpeed = 5f;
+    [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float bulletSpeed = 5f;
+
+    [SerializeField] private float invincibilityTime = 2.0f;
+    private bool isInvincible;
+
+    public HealthBar healthBar;
+
+    private List<SpriteRenderer> spriteRenderers; // Store all sprite renderers
+    // [SerializeField] private GameObject shieldGameObject; // Assign in the inspector
+
 
     public InputActionReference move;
     public InputActionReference fire;
@@ -24,24 +39,30 @@ public class SpaceshipControls : MonoBehaviour
     {
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
+        // currentLives = maxLives;
     }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        spriteRenderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>(true));
+
+        // UpdateHealthFill();
     }
 
     private Vector2 GetObjectBoundsSize()
     {
-        var collider = GetComponent<Collider>(); //TODO: rename variable
+        var collider = GetComponent<Collider2D>();
         if (collider != null)
         {
             var bounds = collider.bounds;
             return new Vector2(bounds.extents.x, bounds.extents.y);
         }
-
-        Debug.LogWarning("No collider found on the object. Cannot determine bounds size.");
-        return Vector2.zero;
+        else
+        {
+            Debug.LogWarning("No collider found on the object. Cannot determine bounds size.");
+            return Vector2.zero;
+        }
     }
 
     private void Update()
@@ -71,9 +92,8 @@ public class SpaceshipControls : MonoBehaviour
         clampedPosition.y =
             Mathf.Clamp(clampedPosition.y, -screenBounds.y + objectSize.y, screenBounds.y - objectSize.y);
         transform.position = clampedPosition;
-        
-        
-        
+
+
         // Pass the moveDirection directly to the Animator to drive the Blend Tree
         animator.SetFloat("MoveX", moveDirection.x);
         animator.SetFloat("MoveY", moveDirection.y);
@@ -102,10 +122,9 @@ public class SpaceshipControls : MonoBehaviour
         //         Debug.Log("Moving Down");
         //     }
         // }
-
     }
 
-   public void Fire()
+    public void Fire()
     {
         var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         if (bullet.TryGetComponent<Rigidbody2D>(out var rigidBody))
@@ -116,5 +135,90 @@ public class SpaceshipControls : MonoBehaviour
         {
             Debug.LogWarning("Rigidbody2D component not found on the bullet prefab.");
         }
+    }
+
+
+    // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("PlayerBullet") && !isInvincible)
+        {
+            healthBar.LoseLife();
+
+            // Instantiate explosion effect
+            // Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+            if (healthBar.currentLives <= 0)
+            {
+                // Handle player death here
+                gameObject.SetActive(false); // Or Destroy(gameObject);
+            }
+            else
+            {
+                // Handle player hit but not dead, such as respawning
+                RespawnPlayer();
+            }
+        }
+    }
+
+
+    // private void RespawnPlayer()
+    // {
+    //     // Your respawn logic here (e.g. reset position)
+    //     transform.position = Vector3.zero;
+    //     StartCoroutine(InvincibilityRoutine());
+    // }
+    
+    private void RespawnPlayer()
+    {
+        // Calculate the left boundary position based on the camera's view
+        float leftBoundary = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
+        float verticalCenter = mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height / 2f, 0)).y;
+
+        // Get the player's sprite width to prevent spawning half off-screen
+        float playerSpriteWidth = objectSize.x;
+        if (spriteRenderers.Count > 0)
+        {
+            playerSpriteWidth = spriteRenderers[0].bounds.size.x / 2;
+        }
+
+        // Set the player's position to the left boundary (plus half sprite width) and vertically centered
+        Vector3 respawnPosition = new Vector3(leftBoundary + playerSpriteWidth, verticalCenter, 0);
+        rigidbody.position = respawnPosition; // Using Rigidbody2D's position for physics consistency
+
+        // Begin the invincibility routine
+        StartCoroutine(InvincibilityRoutine());
+    }
+
+
+    private IEnumerator InvincibilityRoutine()
+    {
+        isInvincible = true;
+        // spaceshipSpriteRenderer.enabled = false; // Start with the spaceship invisible
+
+        // How often the sprite should flicker during invincibility
+        float flickerInterval = 0.1f;
+        float elapsed = 0f;
+
+        while (elapsed < invincibilityTime)
+        {
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.enabled = !spriteRenderer.enabled; // Toggle visibility
+            }
+
+            yield return new WaitForSeconds(flickerInterval);
+            elapsed += flickerInterval;
+        }
+
+        // Ensure all renderers are visible after invincibility ends
+        foreach (var spriteRenderer in spriteRenderers)
+        {
+            spriteRenderer.enabled = true;
+        }
+
+        isInvincible = false;
+        // Disable the shield visual
+        // shieldGameObject.SetActive(false);
     }
 }

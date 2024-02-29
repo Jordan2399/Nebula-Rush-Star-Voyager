@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collision by Player bullet");
+        // Debug.Log("collision by Player bullet");
         // Check if the bullet collided with an object tagged as "Enemy"
         if (collision.CompareTag("Enemy"))
         {

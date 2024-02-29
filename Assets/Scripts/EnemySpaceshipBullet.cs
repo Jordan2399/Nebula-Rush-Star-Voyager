@@ -58,7 +58,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
                 // rigidbody.rotation = angle;
 
                 // Debug log to show where the bullet is being instantiated
-                Debug.Log($"Bullet fired towards player at position: {playerPosition}");
+                // Debug.Log($"Bullet fired towards player at position: {playerPosition}");
             }
             else
             {
