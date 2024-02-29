@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SpaceshipControls : MonoBehaviour
 {
     [SerializeField] private int movingSpeed = 5;
-    [SerializeField] private Transform cubeTransform;
     [SerializeField] private Rigidbody rigidbody;
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -37,17 +33,15 @@ public class SpaceshipControls : MonoBehaviour
 
     private Vector2 GetObjectBoundsSize()
     {
-        var collider = GetComponent<Collider>();
+        var collider = GetComponent<Collider>(); //TODO: rename variable
         if (collider != null)
         {
             var bounds = collider.bounds;
             return new Vector2(bounds.extents.x, bounds.extents.y);
         }
-        else
-        {
-            Debug.LogWarning("No collider found on the object. Cannot determine bounds size.");
-            return Vector2.zero;
-        }
+
+        Debug.LogWarning("No collider found on the object. Cannot determine bounds size.");
+        return Vector2.zero;
     }
 
     private void Update()

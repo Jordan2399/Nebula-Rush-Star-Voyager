@@ -12,7 +12,7 @@ public class EnemyBullet : MonoBehaviour
         
         // Destroy the bullet if it goes out of the screen
 
-        if (!gameObject.TryGetComponent<Renderer>(out Renderer renderer) || !renderer.isVisible)
+        if (!gameObject.TryGetComponent<Renderer>(out var renderer) || !renderer.isVisible) //rename renderer as it hides the unity property.
  
         {
             Destroy(gameObject);

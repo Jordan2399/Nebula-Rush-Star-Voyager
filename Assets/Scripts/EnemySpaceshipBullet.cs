@@ -10,9 +10,9 @@ public class EnemySpaceshipBullet : MonoBehaviour
     public float bulletSpawnOffset = 1f; // Distance in front of the enemy where bullets spawn
 
     private float nextFireTime;
-    GameObject player;
+    private GameObject player;
 
-    void Start()
+    private void Start()
     {
         // Find the player in the scene and assign it
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +20,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
         nextFireTime = Time.time + firingRate;
     }
 
-    void Update()
+    private void Update()
     {
         // Check if it's time to fire
         if (Time.time >= nextFireTime)
@@ -30,21 +30,21 @@ public class EnemySpaceshipBullet : MonoBehaviour
         }
     }
 
-    void FireAtPlayer()
+    private void FireAtPlayer()
     {
         if (player && bulletPrefab)
         {
             // Update the player position every time we fire
-            Vector3 playerPosition = player.transform.position;
+            var playerPosition = player.transform.position;
 
             // Calculate the direction from the enemy to the player
-            Vector3 directionToPlayer = (playerPosition - transform.position).normalized;
+            var directionToPlayer = (playerPosition - transform.position).normalized;
 
             // Offset the spawn position in front of the enemy
-            Vector3 spawnPosition = transform.position + directionToPlayer * bulletSpawnOffset;
+            var spawnPosition = transform.position + directionToPlayer * bulletSpawnOffset;
 
             // Instantiate the bullet
-            GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+            var bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
             var rigidbody = bullet.GetComponent<Rigidbody2D>();
 
             if (rigidbody)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -13,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
 	private Transform playerTransform;
 
 
-	void Start()
+	private void Start()
 	{
 		mainCamera = Camera.main; // Cache the main camera
 		playerTransform = FindObjectOfType<SpaceshipControls>().transform; // Assuming you have a PlayerControls script
@@ -21,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
 		nextSpawnTime = Time.time + spawnRate; // Initialize the next spawn time
 	}
 
-	void Update()
+	private void Update()
 	{
 		// Check if it's time to spawn a new enemy
 		if (Time.time >= nextSpawnTime)
@@ -31,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
 		}
 	}
 
-	void SpawnEnemy()
+	private void SpawnEnemy()
 	{
 		// Determine the vertical bounds of the camera view
 		var screenHalfHeight = mainCamera.orthographicSize;
@@ -42,38 +40,39 @@ public class EnemySpawner : MonoBehaviour
 		var horizontalExtent = screenHalfWidth * 2f;
 
 		// Get the enemy renderer component
-		Renderer enemyRenderer = enemyPrefab.GetComponent<Renderer>();
+		var enemyRenderer = enemyPrefab.GetComponent<Renderer>();
 
-		if (enemyRenderer == null)
+		if (enemyRenderer is null)
 		{
 			UnityEngine.Debug.LogError("Enemy prefab must have a Renderer component for accurate width calculation.");
 			return;
 		}
 
 		// Calculate the maximum spawn area considering the enemy size
-		var maxSpawnX = screenHalfWidth - enemyRenderer.bounds.extents.x;
-		var maxSpawnY = screenHalfHeight - enemyRenderer.bounds.extents.y;
+		var bounds = enemyRenderer.bounds;
+		var maxSpawnX = screenHalfWidth - bounds.extents.x;
+		var maxSpawnY = screenHalfHeight - bounds.extents.y;
 
 		// Choose a random position within the spawn area
-		var spawnX = UnityEngine.Random.Range(0, maxSpawnX);
-		var spawnY = UnityEngine.Random.Range(-maxSpawnY, maxSpawnY);
+		var spawnX = Random.Range(0, maxSpawnX);
+		var spawnY = Random.Range(-maxSpawnY, maxSpawnY);
 
 		// Calculate spawn position with an offset from the center of the screen
-		Vector3 spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
+		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
 
-		Quaternion enemyRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
-		GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, enemyRotation);
+		var enemyRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
+		var newEnemy = Instantiate(enemyPrefab, spawnPosition, enemyRotation);
 
 		// Get the EnemyMovement component from the instantiated enemy
-		EnemyMovement enemyMovement = newEnemy.GetComponent<EnemyMovement>();
-		if (enemyMovement != null)
+		var enemyMovement = newEnemy.GetComponent<EnemyMovement>(); //TODO: TryGetComponent!!!
+		if (enemyMovement is not null)
 		{
 			// Set the target player for the enemy to follow
 			enemyMovement.SetTarget(playerTransform);
 		}
 		else
 		{
-			UnityEngine.Debug.LogError("Enemy prefab must have an EnemyMovement component for movement.");
+			Debug.LogError("Enemy prefab must have an EnemyMovement component for movement.");
 		}
 	}
 
