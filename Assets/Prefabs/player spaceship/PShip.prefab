@@ -1845,7 +1845,6 @@ GameObject:
   - component: {fileID: 3160437023532092594}
   - component: {fileID: 810122073794120474}
   - component: {fileID: 3811456674707440983}
-  - component: {fileID: -6081277403813283399}
   m_Layer: 0
   m_Name: PShip
   m_TagString: Player
@@ -1921,12 +1920,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeTransform: {fileID: 8613863844569907617}
-  movingSpeed: 2
+  movingSpeed: 10
   rigidbody: {fileID: 3811456674707440983}
   bulletPrefab: {fileID: 8572122261075759781, guid: ee55934d0b7e242089bcf220e6f3cc74, type: 3}
   firePoint: {fileID: 8613863844569907617}
   bulletSpeed: 5
-  invincibilityTime: 5
+  invincibilityTime: 2
   healthBar: {fileID: 0}
   move: {fileID: -9197900716770029253, guid: 9f5cbc81183a0b4468856531176fc321, type: 3}
   fire: {fileID: 6643778224431841157, guid: 9f5cbc81183a0b4468856531176fc321, type: 3}
@@ -1978,51 +1977,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &-6081277403813283399
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7404651651293965616}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.01775682, y: -0.14205647}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 7.6411505, y: 9.594431}
-  m_EdgeRadius: 0
 --- !u!1 &7642692156699967764
 GameObject:
   m_ObjectHideFlags: 0

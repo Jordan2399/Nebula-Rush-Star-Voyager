@@ -1,33 +1,73 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
-{
-    public float speed = 10f; // Speed of the bullet
+{    
+    private Animator animator;
+    private string explosionTriggerName = "explode"; // The name of the trigger parameter
+    private bool isExploding = false; // To keep track of the explosion state
 
-    // Update is called once per frame
-    private void Update()
+    private void Awake()
     {
-        // Move the bullet forward
-        // transform.Translate(Vector3.up * speed * Time.deltaTime);
-        
-        // Destroy the bullet if it goes out of the screen
+        animator = GetComponent<Animator>();
+    }
+    
+    // Call this function when you want to play the explosion animation
+    public void PlayExplosionAnimation()
+    {
+        // Check if the bullet is already exploding to prevent multiple calls
+        if (isExploding) return;
 
-        if (!gameObject.TryGetComponent<Renderer>(out var renderer) || !renderer.isVisible) //use another name for renderer as it hides a unity property!
- 
+        Debug.Log("Player Bullet explosion");
+
+        isExploding = true;
+        animator.SetTrigger(explosionTriggerName);
+
+        // Optionally: Disable the collider here
+        var collider = GetComponent<Collider2D>();
+        if (collider != null)
         {
-            Destroy(gameObject);
+            collider.enabled = false;
         }
+
+        // Disable the Rigidbody2D to stop any movement
+        var rigidbody2D = GetComponent<Rigidbody2D>();
+        if (rigidbody2D != null)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.isKinematic = true; // Prevents the Rigidbody from responding to physics
+        }
+
+        // Optional: Change layer or tag to prevent further collisions
+        // gameObject.layer = LayerMask.NameToLayer("Ignore Collisions"); // Make sure the "Ignore Collisions" layer exists and is set to ignore other layers as needed
+
+        // Wait for the animation to finish before destroying the bullet
+        StartCoroutine(WaitForAnimation());
     }
 
-    // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
+    // A coroutine to wait for the animation to finish
+    private IEnumerator WaitForAnimation()
+    {
+        // Wait for the Animator to transition to the explosion state
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("BulletCollisionAnimation"));
+
+        // Wait for the explosion animation to reach its end
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+
+        // Now you can safely destroy the bullet GameObject
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Debug.Log("collision by Player bullet");
+        Debug.Log("collision by Player bullet"); 
         // Check if the bullet collided with an object tagged as "Enemy"
-        if (collision.CompareTag("Enemy"))
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && !isExploding)
         {
-            // Destroy the bullet upon collision with an enemy
-            Destroy(gameObject);
-        }
+            Debug.Log("Player Bullet collided somewhere");
+            // Move the bullet to the collision point
+            transform.position = collision.ClosestPoint(transform.position);
+            PlayExplosionAnimation();
+        } 
     }
 }

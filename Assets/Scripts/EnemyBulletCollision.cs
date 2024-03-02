@@ -1,19 +1,20 @@
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBulletCollision : MonoBehaviour
 {
-    public float speed = 2f; // Speed of the bullet
+    // public float speed = 2f; // Speed of the bullet
 
     // Update is called once per frame
     private void Update()
     {
         // Move the bullet forward
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
-        
+        // transform.Translate(Vector3.up * speed * Time.deltaTime);
+        // transform.Translate(Vector3.up * Time.deltaTime);
+
         // Destroy the bullet if it goes out of the screen
 
+
         if (!gameObject.TryGetComponent<Renderer>(out var renderer) || !renderer.isVisible) //rename renderer as it hides the unity property.
- 
         {
             Destroy(gameObject);
         }

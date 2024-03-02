@@ -45,10 +45,10 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject);
 
             // Also, you might want to destroy the bullet to prevent it from continuing through space
-            if (collision.CompareTag("PlayerBullet"))
-            {
-                Destroy(collision.gameObject);
-            }
+            // if (collision.CompareTag("PlayerBullet"))
+            // {
+            //     Destroy(collision.gameObject);
+            // }
         }
     }
 }

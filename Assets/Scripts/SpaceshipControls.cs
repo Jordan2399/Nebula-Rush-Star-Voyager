@@ -9,7 +9,7 @@ public class SpaceshipControls : MonoBehaviour
 {
     [SerializeField] private Transform cubeTransform;
 
-    [SerializeField] private int movingSpeed = 5;
+    [SerializeField] private int movingSpeed = 10;
     [SerializeField] private Rigidbody2D rigidbody;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
@@ -33,6 +33,7 @@ public class SpaceshipControls : MonoBehaviour
     private Vector2 objectSize;
 
     private Animator animator;
+    private Vector3 lastPosition;
 
 
     private void Start()
@@ -40,6 +41,7 @@ public class SpaceshipControls : MonoBehaviour
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
         // currentLives = maxLives;
+        lastPosition = transform.position;
     }
 
     private void Awake()
@@ -72,6 +74,8 @@ public class SpaceshipControls : MonoBehaviour
         {
             Fire();
         }
+        
+ 
     }
 
     private void FixedUpdate()
@@ -122,6 +126,10 @@ public class SpaceshipControls : MonoBehaviour
         //         Debug.Log("Moving Down");
         //     }
         // }
+        
+        // float distanceTraveled = Vector3.Distance(transform.position, lastPosition);
+        // ScoreManager.Instance.AddDistanceScore(distanceTraveled);
+        // lastPosition = transform.position;
     }
 
     public void Fire()
@@ -143,6 +151,7 @@ public class SpaceshipControls : MonoBehaviour
     {
         if (!other.CompareTag("PlayerBullet") && !isInvincible)
         {
+            Debug.Log("Player Collided with something other that playerBullet");
             healthBar.LoseLife();
 
             // Instantiate explosion effect

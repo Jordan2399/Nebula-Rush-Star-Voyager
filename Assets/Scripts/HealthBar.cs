@@ -33,6 +33,7 @@ public class HealthBar : MonoBehaviour
 
     public void LoseLife()
     {
+        Debug.Log("My Current Life is:"+currentLives);
         currentLives = Mathf.Max(currentLives - 1, 0); // Ensure lives don't go below 0
         UpdateHealthBar();
     }

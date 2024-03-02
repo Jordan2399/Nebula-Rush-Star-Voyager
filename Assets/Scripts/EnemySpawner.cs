@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 	public GameObject enemyPrefab; // Assign this in the Inspector
-	public float spawnRate = 2f; // The rate at which enemies will spawn (every 2 seconds by default)
+	public float spawnRate = 5f; // The rate at which enemies will spawn (every 2 seconds by default)
 	public float enemySpeed = 3f; // Speed of the enemy
 
 	private Camera mainCamera;
