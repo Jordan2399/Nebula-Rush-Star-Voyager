@@ -67,6 +67,7 @@ public class Bullet : MonoBehaviour
             Debug.Log("Player Bullet collided somewhere");
             // Move the bullet to the collision point
             transform.position = collision.ClosestPoint(transform.position);
+            Debug.Log("Player Bullet collided somewhere2");
             PlayExplosionAnimation();
         } 
     }

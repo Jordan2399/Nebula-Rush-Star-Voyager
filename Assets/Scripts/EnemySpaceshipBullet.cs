@@ -102,7 +102,9 @@ public class EnemySpaceshipBullet : MonoBehaviour
             Destroy(gameObject);
 
             // Also, you might want to destroy the bullet to prevent it from continuing through space
-            Destroy(collision.gameObject);
+            // Destroy(collision.gameObject);
         }
     }
+    
+    
 }

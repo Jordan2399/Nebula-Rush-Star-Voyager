@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8719256321107155364}
   - component: {fileID: 9217309629932054719}
   - component: {fileID: 4068253813305039973}
+  - component: {fileID: 7542894022640531852}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -133,3 +134,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.96
+--- !u!95 &7542894022640531852
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151597871547997588}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd2e5aa321dd29f42ad02ceedf8bf471, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
