@@ -23,7 +23,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
     private void Update()
     {
         // Check if it's time to fire
-        if (Time.time >= nextFireTime)
+        if (Time.time >= nextFireTime && player && player.activeInHierarchy)
         {
             FireAtPlayer();
             nextFireTime = Time.time + firingRate; // Set the time for the next shot
@@ -32,7 +32,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
     private void FireAtPlayer()
     {
-        if (player && bulletPrefab)
+        if (player && bulletPrefab && player.activeInHierarchy)
         {
             // Update the player position every time we fire
             var playerPosition = player.transform.position;
@@ -59,6 +59,14 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
                 // Debug log to show where the bullet is being instantiated
                 // Debug.Log($"Bullet fired towards player at position: {playerPosition}");
+                
+                
+                
+                // Rotate the bullet to face towards the direction it's moving
+                var angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+                rigidbody.rotation = angle - 90f; // Adjust the angle if necessary
+                
+                
             }
             else
             {
