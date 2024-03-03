@@ -4,16 +4,16 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {    
     private Animator animator;
-    private string explosionTriggerName = "explode"; // The name of the trigger parameter
+    private const string ExplosionTriggerName = "explode"; // The name of the trigger parameter
     private bool isExploding = false; // To keep track of the explosion state
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>(); //TODO: TryGetComponent!!!!
     }
     
     // Call this function when you want to play the explosion animation
-    public void PlayExplosionAnimation()
+    private void PlayExplosionAnimation()
     {
         // Check if the bullet is already exploding to prevent multiple calls
         if (isExploding) return;
@@ -21,21 +21,21 @@ public class Bullet : MonoBehaviour
         Debug.Log("Player Bullet explosion");
 
         isExploding = true;
-        animator.SetTrigger(explosionTriggerName);
+        animator.SetTrigger(ExplosionTriggerName);
 
         // Optionally: Disable the collider here
-        var collider = GetComponent<Collider2D>();
-        if (collider != null)
+        var bulletCollider = GetComponent<Collider2D>(); //TODO: TryGetComponent!!!!
+        if (bulletCollider != null) //use is not null
         {
-            collider.enabled = false;
+            bulletCollider.enabled = false;
         }
 
         // Disable the Rigidbody2D to stop any movement
-        var rigidbody2D = GetComponent<Rigidbody2D>();
-        if (rigidbody2D != null)
+        var bulletRigidBody2D = GetComponent<Rigidbody2D>(); //TODO: TryGetComponent!!!!
+        if (bulletRigidBody2D != null) //use is not null
         {
-            rigidbody2D.velocity = Vector2.zero;
-            rigidbody2D.isKinematic = true; // Prevents the Rigidbody from responding to physics
+            bulletRigidBody2D.velocity = Vector2.zero;
+            bulletRigidBody2D.isKinematic = true; // Prevents the Rigidbody from responding to physics
         }
 
         // Optional: Change layer or tag to prevent further collisions
@@ -62,13 +62,11 @@ public class Bullet : MonoBehaviour
     {
         Debug.Log("collision by Player bullet"); 
         // Check if the bullet collided with an object tagged as "Enemy"
-        if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet")) && !isExploding)
-        {
-            Debug.Log("Player Bullet collided somewhere");
-            // Move the bullet to the collision point
-            transform.position = collision.ClosestPoint(transform.position);
-            Debug.Log("Player Bullet collided somewhere2");
-            PlayExplosionAnimation();
-        } 
+        if ((!collision.CompareTag("Enemy") && !collision.CompareTag("EnemyBullet")) || isExploding) return;
+        Debug.Log("Player Bullet collided somewhere");
+        // Move the bullet to the collision point
+        transform.position = collision.ClosestPoint(transform.position);
+        Debug.Log("Player Bullet collided somewhere2");
+        PlayExplosionAnimation();
     }
 }

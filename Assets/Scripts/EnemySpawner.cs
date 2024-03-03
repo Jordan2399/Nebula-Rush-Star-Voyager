@@ -15,6 +15,13 @@ public class EnemySpawner : MonoBehaviour
 	{
 		mainCamera = Camera.main; // Cache the main camera
 		playerTransform = FindObjectOfType<SpaceshipControls>().transform; // Assuming you have a PlayerControls script
+		/*
+		 * TODO:
+		 * What if you don't?
+		 * What if there are multiple objects that have SpaceshipControls on it?
+		 * A reference manager would do this job at its best.
+		 */
+		
 
 		nextSpawnTime = Time.time + spawnRate; // Initialize the next spawn time
 	}
@@ -40,11 +47,11 @@ public class EnemySpawner : MonoBehaviour
 		var horizontalExtent = screenHalfWidth * 2f;
 
 		// Get the enemy renderer component
-		var enemyRenderer = enemyPrefab.GetComponent<Renderer>();
+		var enemyRenderer = enemyPrefab.GetComponent<Renderer>(); //TODO: TryGetComponent!!!
 
 		if (enemyRenderer is null)
 		{
-			UnityEngine.Debug.LogError("Enemy prefab must have a Renderer component for accurate width calculation.");
+			Debug.LogError("Enemy prefab must have a Renderer component for accurate width calculation.");
 			return;
 		}
 

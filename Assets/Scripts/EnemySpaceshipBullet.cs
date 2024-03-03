@@ -15,7 +15,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
     private void Start()
     {
         // Find the player in the scene and assign it
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player"); //TODO: better: create a manager that you can access static. Then save the ship as SerializeField. This method you have used is inefficient!
         // Initialize the nextFireTime
         nextFireTime = Time.time + firingRate;
     }
@@ -45,7 +45,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
             // Instantiate the bullet
             var bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-            var rigidbody = bullet.GetComponent<Rigidbody2D>();
+            var rigidbody = bullet.GetComponent<Rigidbody2D>(); //TODO: rename variable and TryGetComponent!
 
             if (rigidbody)
             {

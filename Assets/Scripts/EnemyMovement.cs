@@ -63,7 +63,7 @@ public class EnemyMovement : MonoBehaviour
     
     
     // Call this function when you want to play the explosion animation
-    public void PlayExplosionAnimation()
+    private void PlayExplosionAnimation()
     {
         // Check if the bullet is already exploding to prevent multiple calls
         if (isExploding) return;
@@ -74,14 +74,14 @@ public class EnemyMovement : MonoBehaviour
         animator.SetTrigger(explosionTriggerName);
 
         // Optionally: Disable the collider here
-        var collider = GetComponent<Collider2D>();
+        var collider = GetComponent<Collider2D>(); //TODO: rename variable and TryGetComponent!
         if (collider != null)
         {
             collider.enabled = false;
         }
 
         // Disable the Rigidbody2D to stop any movement
-        var rigidbody2D = GetComponent<Rigidbody2D>();
+        var rigidbody2D = GetComponent<Rigidbody2D>(); //TODO: rename variable and TryGetComponent!
         if (rigidbody2D != null)
         {
             rigidbody2D.velocity = Vector2.zero;
