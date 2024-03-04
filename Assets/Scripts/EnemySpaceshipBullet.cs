@@ -11,6 +11,8 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
     private float nextFireTime;
     private GameObject player;
+    [SerializeField] private int scoreForDestroy = 7; 
+
 
     private void Start()
     {
@@ -100,7 +102,9 @@ public class EnemySpaceshipBullet : MonoBehaviour
             // For example, you could play an explosion effect, increase the player's score, etc.
 
             // Destroy the enemy object this script is attached to
+            
             Destroy(gameObject);
+            ScoreManager.Instance.AddPoint(scoreForDestroy);
 
             // Also, you might want to destroy the bullet to prevent it from continuing through space
             // Destroy(collision.gameObject);
