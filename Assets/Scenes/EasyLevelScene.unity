@@ -1493,6 +1493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quad
       objectReference: {fileID: 0}
+    - target: {fileID: 9126073405580088354, guid: 009266c14fbf341ccb69b10b6a399180, type: 3}
+      propertyPath: scorePerUnit
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9135911540472450123, guid: 009266c14fbf341ccb69b10b6a399180, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

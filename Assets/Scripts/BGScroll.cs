@@ -3,12 +3,16 @@ using UnityEngine;
 public class BGScroll : MonoBehaviour
 {
     public float speed;
-    [SerializeField] private Renderer bgRenderer;
-    
+    public Renderer bgRenderer;
+    [SerializeField] private float scorePerUnit = 1f; // Points per unit of distance
 
-    // Update is called once per frame
+
     private void Update()
     {
-        bgRenderer.material.mainTextureOffset += new Vector2(speed * Time.deltaTime, 0);
+        float distanceThisFrame = speed * Time.deltaTime;
+        bgRenderer.material.mainTextureOffset += new Vector2(distanceThisFrame, 0);
+
+        // Call the method to add score based on the distance traveled
+        ScoreManager.Instance.AddDistanceScore(distanceThisFrame, scorePerUnit);
     }
 }

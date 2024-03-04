@@ -9,6 +9,9 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform target;
     private float speed = 3f;
+    
+    [SerializeField] private int scoreForDestroy = 5; 
+
 
 
     private void Awake()
@@ -57,8 +60,8 @@ public class EnemyMovement : MonoBehaviour
             Debug.Log("Player Bullet collided somewhere2");
             PlayExplosionAnimation();
   
-			ScoreManager.Instance.AddScore(5);
-
+			// ScoreManager.Instance.AddScore(5);
+            ScoreManager.Instance.AddPoint(scoreForDestroy);
 
 		}
 	}
