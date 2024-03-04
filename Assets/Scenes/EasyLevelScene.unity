@@ -346,6 +346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 392134660}
+  - component: {fileID: 392134661}
   m_Layer: 0
   m_Name: EmptyMeteors
   m_TagString: Untagged
@@ -368,6 +369,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 270860338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &392134661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392134659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872e940d23ee286449ae5b26bf72f935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meteorPrefab: {fileID: 5560395210288662899, guid: ff290c1a5df59b14689c4086bbb37fbc, type: 3}
+  spawnRate: 2
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6694398773519484407, guid: f5f8e95378ce2124897e5145607e3b72, type: 3}
