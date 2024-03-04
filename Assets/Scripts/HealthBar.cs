@@ -33,11 +33,12 @@ public class HealthBar : MonoBehaviour
 
     public void LoseLife()
     {
+        Debug.Log("My Current Life is:"+currentLives);
         currentLives = Mathf.Max(currentLives - 1, 0); // Ensure lives don't go below 0
         UpdateHealthBar();
     }
 
-    public void GainLife()
+    public void GainLife() //never used?
     {
         if (currentLives < maxLives)
         {
@@ -66,11 +67,11 @@ public class HealthBar : MonoBehaviour
         healthFill.fillAmount = (float)currentLives / maxLives;
     
         // Calculate the position of the end of the health fill
-        float fillEndPos = healthFill.fillAmount * healthFill.rectTransform.rect.width;
+        var fillEndPos = healthFill.fillAmount * healthFill.rectTransform.rect.width;
 
         // The new X position for the life icon should be exactly at the end of the fill
         // Assuming the pivot of the lifeIcon is set correctly to be centered horizontally
-        float iconNewX = fillEndPos;
+        var iconNewX = fillEndPos; //TODO: use fillEndPos in line 77? As you don't have any calculations here?
 
         // Set the life icon's position to the new position
         lifeIcon.rectTransform.anchoredPosition = new Vector2(iconNewX, lifeIcon.rectTransform.anchoredPosition.y);
@@ -82,9 +83,10 @@ public class HealthBar : MonoBehaviour
 
     private void CreateDividers()
     {
-        RectTransform healthBarRectTransform = healthFill.rectTransform.parent.GetComponent<RectTransform>();
-        float healthBarWidth = healthBarRectTransform.rect.width;
-        float segmentWidth = healthBarWidth / maxLives;
+        var healthBarRectTransform = healthFill.rectTransform.parent.GetComponent<RectTransform>(); //TODO: TryGetcomponent!!!!! --> cf line below
+        //gameObject.TryGetComponent<RectTransform>(out var healthBarRectTransform);
+        var healthBarWidth = healthBarRectTransform.rect.width;
+        var segmentWidth = healthBarWidth / maxLives;
 
         // Clear any existing dividers
         foreach (Transform child in healthBarRectTransform)
@@ -94,21 +96,21 @@ public class HealthBar : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
-        int healthFillIndex = healthFill.transform.GetSiblingIndex();
+        var healthFillIndex = healthFill.transform.GetSiblingIndex();
 
         // Get the sibling index of the LifeIcon, so dividers can be placed just below it
 
-        for (int i = 1; i < maxLives; i++)
+        for (var i = 1; i < maxLives; i++)
         {
-            GameObject divider = Instantiate(dividerPrefab, healthBarRectTransform);
-            RectTransform dividerRT = divider.GetComponent<RectTransform>();
+            var divider = Instantiate(dividerPrefab, healthBarRectTransform);
+            var dividerRT = divider.GetComponent<RectTransform>(); //TODO: TryGetComponent!
             dividerRT.localScale = Vector3.one; // Ensure it has the correct scale
             dividerRT.sizeDelta =
                 new Vector2(4, healthBarRectTransform.rect.height); // Set the divider's width and height
 
             // Set the divider's position
             // Calculate the position based on the actual width of the health bar
-            float dividerPositionX = (segmentWidth * i) - (healthBarWidth * healthBarRectTransform.pivot.x);
+            var dividerPositionX = (segmentWidth * i) - (healthBarWidth * healthBarRectTransform.pivot.x);
             dividerRT.anchoredPosition = new Vector2(dividerPositionX, 0);
             
             dividerRT.anchorMin = new Vector2(0.5f, 0.5f);

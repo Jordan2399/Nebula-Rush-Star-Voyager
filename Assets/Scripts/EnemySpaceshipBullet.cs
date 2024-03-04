@@ -15,7 +15,8 @@ public class EnemySpaceshipBullet : MonoBehaviour
     private void Start()
     {
         // Find the player in the scene and assign it
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player"); //TODO: better: create a manager that you can access static. Then save the ship as SerializeField. This method you have used is inefficient!
+        //player = PlayerManager.instance.player;
         // Initialize the nextFireTime
         nextFireTime = Time.time + firingRate;
     }
@@ -23,7 +24,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
     private void Update()
     {
         // Check if it's time to fire
-        if (Time.time >= nextFireTime)
+        if (Time.time >= nextFireTime && player && player.activeInHierarchy)
         {
             FireAtPlayer();
             nextFireTime = Time.time + firingRate; // Set the time for the next shot
@@ -32,7 +33,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
     private void FireAtPlayer()
     {
-        if (player && bulletPrefab)
+        if (player && bulletPrefab && player.activeInHierarchy)
         {
             // Update the player position every time we fire
             var playerPosition = player.transform.position;
@@ -45,7 +46,7 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
             // Instantiate the bullet
             var bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
-            var rigidbody = bullet.GetComponent<Rigidbody2D>();
+            var rigidbody = bullet.GetComponent<Rigidbody2D>(); //TODO: rename variable and TryGetComponent!
 
             if (rigidbody)
             {
@@ -59,6 +60,14 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
                 // Debug log to show where the bullet is being instantiated
                 // Debug.Log($"Bullet fired towards player at position: {playerPosition}");
+                
+                
+                
+                // Rotate the bullet to face towards the direction it's moving
+                var angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+                rigidbody.rotation = angle - 90f; // Adjust the angle if necessary
+                
+                
             }
             else
             {
@@ -94,7 +103,9 @@ public class EnemySpaceshipBullet : MonoBehaviour
             Destroy(gameObject);
 
             // Also, you might want to destroy the bullet to prevent it from continuing through space
-            Destroy(collision.gameObject);
+            // Destroy(collision.gameObject);
         }
     }
+    
+    
 }

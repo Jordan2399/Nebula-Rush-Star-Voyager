@@ -9,7 +9,7 @@ public class SpaceshipControls : MonoBehaviour
 {
     [SerializeField] private Transform cubeTransform;
 
-    [SerializeField] private int movingSpeed = 5;
+    [SerializeField] private int movingSpeed = 10;
     [SerializeField] private Rigidbody2D rigidbody;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
@@ -34,6 +34,7 @@ public class SpaceshipControls : MonoBehaviour
     private Vector2 objectSize;
 
     private Animator animator;
+    private Vector3 lastPosition;
 
 
     private void Start()
@@ -41,6 +42,7 @@ public class SpaceshipControls : MonoBehaviour
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
         // currentLives = maxLives;
+        lastPosition = transform.position;
     }
 
     private void Awake()
@@ -73,6 +75,8 @@ public class SpaceshipControls : MonoBehaviour
         {
             Fire();
         }
+        
+ 
     }
 
     private void FixedUpdate()
@@ -123,6 +127,10 @@ public class SpaceshipControls : MonoBehaviour
         //         Debug.Log("Moving Down");
         //     }
         // }
+        
+        // float distanceTraveled = Vector3.Distance(transform.position, lastPosition);
+        // ScoreManager.Instance.AddDistanceScore(distanceTraveled);
+        // lastPosition = transform.position;
     }
 
     public void Fire()
@@ -144,6 +152,7 @@ public class SpaceshipControls : MonoBehaviour
     {
         if (!other.CompareTag("PlayerBullet") && !isInvincible)
         {
+            Debug.Log("Player Collided with something other that playerBullet");
             healthBar.LoseLife();
 
             // Instantiate explosion effect
@@ -173,18 +182,18 @@ public class SpaceshipControls : MonoBehaviour
     private void RespawnPlayer()
     {
         // Calculate the left boundary position based on the camera's view
-        float leftBoundary = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
-        float verticalCenter = mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height / 2f, 0)).y;
+        var leftBoundary = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
+        var verticalCenter = mainCamera.ScreenToWorldPoint(new Vector3(0, Screen.height / 2f, 0)).y;
 
         // Get the player's sprite width to prevent spawning half off-screen
-        float playerSpriteWidth = objectSize.x;
+        var playerSpriteWidth = objectSize.x;
         if (spriteRenderers.Count > 0)
         {
             playerSpriteWidth = spriteRenderers[0].bounds.size.x / 2;
         }
 
         // Set the player's position to the left boundary (plus half sprite width) and vertically centered
-        Vector3 respawnPosition = new Vector3(leftBoundary + playerSpriteWidth, verticalCenter, 0);
+        var respawnPosition = new Vector3(leftBoundary + playerSpriteWidth, verticalCenter, 0);
         rigidbody.position = respawnPosition; // Using Rigidbody2D's position for physics consistency
 
         // Begin the invincibility routine
@@ -198,8 +207,8 @@ public class SpaceshipControls : MonoBehaviour
         // spaceshipSpriteRenderer.enabled = false; // Start with the spaceship invisible
 
         // How often the sprite should flicker during invincibility
-        float flickerInterval = 0.1f;
-        float elapsed = 0f;
+        var flickerInterval = 0.1f; //TODO: move to SeralizeField property if value must be changed later
+        var elapsed = 0f;
 
         while (elapsed < invincibilityTime)
         {

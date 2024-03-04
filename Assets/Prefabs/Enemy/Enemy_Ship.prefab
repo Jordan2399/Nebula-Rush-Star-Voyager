@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1970366519923357920}
   - component: {fileID: 2066735658666550412}
-  - component: {fileID: 2224441665772672493}
   - component: {fileID: -7897280172913427853}
+  - component: {fileID: 3181659928067644834}
   m_Layer: 0
   m_Name: Enemy_Ship
   m_TagString: Enemy
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7803654775763867808}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0355, y: 0.0089, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1804962, y: 1.2498776, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -86,8 +86,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2224441665772672493
-BoxCollider2D:
+--- !u!114 &-7897280172913427853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803654775763867808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a643770af4d3d4b8c937c89806d792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 8572122261075759781, guid: 849ac922a1449334189422b0e0a09c7a, type: 3}
+  firingRate: 50
+  bulletSpeed: 2
+  bulletSpawnOffset: 1.57
+--- !u!60 &3181659928067644834
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,7 +134,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0017768294}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -128,22 +144,38 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.28, y: 0.9992399}
-  m_EdgeRadius: 0
---- !u!114 &-7897280172913427853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7803654775763867808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a643770af4d3d4b8c937c89806d792, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8572122261075759781, guid: 849ac922a1449334189422b0e0a09c7a, type: 3}
-  firingRate: 1
-  bulletSpeed: 5
-  bulletSpawnOffset: 1
+  m_Points:
+    m_Paths:
+    - - {x: 0.337362, y: -0.12024015}
+      - {x: 0.39723992, y: -0.12949714}
+      - {x: 0.41802195, y: -0.105942994}
+      - {x: 0.44530693, y: 0.0390971}
+      - {x: 0.50234663, y: 0.05681715}
+      - {x: 0.61782193, y: 0.45405698}
+      - {x: 0.26674822, y: 0.41013122}
+      - {x: 0.25493863, y: 0.3648799}
+      - {x: 0.21572107, y: 0.38318282}
+      - {x: 0.08707424, y: 0.3850841}
+      - {x: 0.006748505, y: 0.48214856}
+      - {x: -0.02, y: 0.48999998}
+      - {x: -0.12, y: 0.38}
+      - {x: -0.22415644, y: 0.38058275}
+      - {x: -0.2543376, y: 0.3441041}
+      - {x: -0.2742792, y: 0.40798265}
+      - {x: -0.6392635, y: 0.44620562}
+      - {x: -0.49740794, y: 0.055040047}
+      - {x: -0.45, y: 0.03}
+      - {x: -0.42946333, y: -0.11111434}
+      - {x: -0.3307365, y: -0.12734854}
+      - {x: -0.2933283, y: -0.033874393}
+      - {x: -0.17941758, y: -0.24230877}
+      - {x: -0.15608902, y: -0.23978862}
+      - {x: -0.14819011, y: -0.33933717}
+      - {x: -0.095154986, y: -0.40290236}
+      - {x: -0.01, y: -0.48999998}
+      - {x: 0.03, y: -0.48999998}
+      - {x: 0.099999994, y: -0.39999998}
+      - {x: 0.13946329, y: -0.23371443}
+      - {x: 0.17518373, y: -0.25379705}
+      - {x: 0.3104912, y: -0.03209737}
+  m_UseDelaunayMesh: 0

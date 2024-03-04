@@ -58,7 +58,7 @@ public class SpaceshipSpawn : MonoBehaviour
 		var maxSpawnY = screenHalfHeight - bounds.extents.y;
 
 		// Set spawn position on the extreme right y-axis border
-		var spawnX = maxSpawnX;
+		var spawnX = maxSpawnX; 
 		var spawnY = Random.Range(-maxSpawnY, maxSpawnY);
 
 		// Calculate spawn position with an offset from the center of the screen
