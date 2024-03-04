@@ -8,19 +8,11 @@ public class SpaceshipSpawn : MonoBehaviour
 	private Camera mainCamera;
 	private float nextSpawnTime;
 
-	private PlayerScore playerScore;
 
 	private void Start()
 	{
 		mainCamera = Camera.main; // Cache the main camera
 		nextSpawnTime = Time.time + spawnRate; // Initialize the next spawn time
-
-		// Find and cache the PlayerScore script on the player object
-		playerScore = FindObjectOfType<PlayerScore>();
-		if (playerScore == null)
-		{
-			UnityEngine.Debug.LogError("PlayerScore script not found on the player object!");
-		}
 	}
 
 	private void Update()
@@ -67,7 +59,6 @@ public class SpaceshipSpawn : MonoBehaviour
 		var enemyRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
 		Instantiate(enemyPrefab, spawnPosition, enemyRotation);
 
-		playerScore.AddScore(5);
 	}
 
 }

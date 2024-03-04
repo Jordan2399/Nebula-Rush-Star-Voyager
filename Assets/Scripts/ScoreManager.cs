@@ -1,8 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerScore : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
+	public static ScoreManager Instance { get; private set; }
+	public int Score { get; private set; }
+
+
 	private int score = 0;
 
 	public TextMeshProUGUI scoreText; // Assign your TextMeshPro UI element in the Inspector
@@ -16,6 +20,21 @@ public class PlayerScore : MonoBehaviour
 		}
 
 		UpdateScoreText();
+	}
+
+
+	private void Awake()
+	{
+		// Singleton pattern to ensure only one ScoreManager exists
+		if (Instance == null)
+		{
+			Instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	// Add points to the player's score
@@ -34,9 +53,20 @@ public class PlayerScore : MonoBehaviour
 		}
 	}
 
-	// You can also create a method to retrieve the current score if needed
-	public int GetScore()
+	public void ResetScore()
 	{
-		return score;
+		Score = 0;
+		UpdateScoreText();
 	}
+
+
+
+	public void AddDistanceScore(float distance)
+	{
+		// Assuming 1 point per unit of distance for example
+		Score += Mathf.FloorToInt(distance);
+		UpdateScoreText();
+	}
+
+
 }

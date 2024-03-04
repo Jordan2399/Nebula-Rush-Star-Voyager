@@ -63,6 +63,7 @@ public class Bullet : MonoBehaviour
         Debug.Log("collision by Player bullet"); 
         // Check if the bullet collided with an object tagged as "Enemy"
         if ((!collision.CompareTag("Enemy") && !collision.CompareTag("EnemyBullet")) || isExploding) return;
+       
         Debug.Log("Player Bullet collided somewhere");
         // Move the bullet to the collision point
         transform.position = collision.ClosestPoint(transform.position);

@@ -37,13 +37,25 @@ public class SpaceshipControls : MonoBehaviour
     private Vector3 lastPosition;
 
 
-    private void Start()
+	private ScoreManager scoreManager;
+
+
+	private void Start()
     {
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
         // currentLives = maxLives;
         lastPosition = transform.position;
-    }
+
+
+		// Find and cache the PlayerScore script on the player object
+		/** playerScore = FindObjectOfType<PlayerScore>();
+		if (playerScore == null)
+		{
+			UnityEngine.Debug.LogError("PlayerScore script not found on the player object!");
+		}
+        **/
+	}
 
     private void Awake()
     {

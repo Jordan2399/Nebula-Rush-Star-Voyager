@@ -56,8 +56,12 @@ public class EnemyMovement : MonoBehaviour
             transform.position = collision.ClosestPoint(transform.position);
             Debug.Log("Player Bullet collided somewhere2");
             PlayExplosionAnimation();
-        }
-    }
+  
+			ScoreManager.Instance.AddScore(5);
+
+
+		}
+	}
     
     
     

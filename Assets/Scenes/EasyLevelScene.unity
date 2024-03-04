@@ -337,6 +337,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5753157194168235538, guid: 23ea6dd79901f1a40a0a23ef870e6dad, type: 3}
   m_PrefabInstance: {fileID: 5504563369617930316}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &392134659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 392134660}
+  m_Layer: 0
+  m_Name: EmptyMeteors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &392134660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392134659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.03, y: 4.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 270860338}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6694398773519484407, guid: f5f8e95378ce2124897e5145607e3b72, type: 3}
@@ -1426,6 +1457,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5753157194168235538, guid: 23ea6dd79901f1a40a0a23ef870e6dad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1703853599}
+    - targetCorrespondingSourceObject: {fileID: 5753157194168235538, guid: 23ea6dd79901f1a40a0a23ef870e6dad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 392134660}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23ea6dd79901f1a40a0a23ef870e6dad, type: 3}
 --- !u!1001 &7439607168394127056
