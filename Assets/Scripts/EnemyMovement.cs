@@ -29,7 +29,7 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         // Check if a target is set
-        if (target != null)
+        if (target is not null)
         {
             // Calculate the direction towards the target player
             Vector2 direction = (target.position - transform.position).normalized;
