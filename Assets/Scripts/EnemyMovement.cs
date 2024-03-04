@@ -40,7 +40,6 @@ public class EnemyMovement : MonoBehaviour
             // Optionally, you might want to add additional logic here
             // to handle what happens when the enemy is destroyed.
             // For example, you could play an explosion effect, increase the player's score, etc.
-
             // Destroy the enemy object this script is attached to
             Destroy(gameObject);
 

@@ -19,6 +19,7 @@ public class SpaceshipControls : MonoBehaviour
     private bool isInvincible;
 
     public HealthBar healthBar;
+    
 
     private List<SpriteRenderer> spriteRenderers; // Store all sprite renderers
     // [SerializeField] private GameObject shieldGameObject; // Assign in the inspector
