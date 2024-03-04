@@ -1845,6 +1845,8 @@ GameObject:
   - component: {fileID: 3160437023532092594}
   - component: {fileID: 810122073794120474}
   - component: {fileID: 3811456674707440983}
+  - component: {fileID: 671951790489148085}
+  - component: {fileID: 2997074026161883119}
   m_Layer: 0
   m_Name: PShip
   m_TagString: Player
@@ -1977,6 +1979,73 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!60 &671951790489148085
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7404651651293965616}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 2.6845243, y: 0.13037731}
+      - {x: 1.732592, y: 0.598841}
+      - {x: 0.044512514, y: 4.783602}
+      - {x: -1.705071, y: 0.73948365}
+      - {x: -2.760614, y: -0.09429464}
+      - {x: -3.8335216, y: -3.9197133}
+      - {x: -1.7006087, y: -4.7038984}
+      - {x: 2.543778, y: -4.5972776}
+      - {x: 3.7914627, y: -3.487855}
+  m_UseDelaunayMesh: 0
+--- !u!114 &2997074026161883119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7404651651293965616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 980a90fe470e829459c269fd219723a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
 --- !u!1 &7642692156699967764
 GameObject:
   m_ObjectHideFlags: 0
