@@ -82,9 +82,4 @@ public class EnemySpawner : MonoBehaviour
 			Debug.LogError("Enemy prefab must have an EnemyMovement component for movement.");
 		}
 	}
-
-
-
-
-
 }
