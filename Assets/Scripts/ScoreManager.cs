@@ -8,6 +8,9 @@ public class ScoreManager : MonoBehaviour
 
     private int score = 0;
     private float distanceAccumulator = 0f; // This will accumulate the fractional distance until it exceeds 1
+    private bool isBossActive = false; // Added to control score and distance accumulation
+    
+    private float totalDistance = 0f;
 
     private void Awake()
     {
@@ -21,7 +24,7 @@ public class ScoreManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     private void Start()
     {
         score = 0; // Initialize score to zero
@@ -31,14 +34,18 @@ public class ScoreManager : MonoBehaviour
     // Add points to the player's score based on distance traveled
     public void AddDistanceScore(float distance, float scorePerUnit)
     {
+        if (isBossActive) return; // Do not accumulate distance or score if a boss is active
+
         // Convert distance to score using the rate factor
         float scoreToAdd = distance * scorePerUnit;
-    
+
         // Accumulate the score to add
         distanceAccumulator += scoreToAdd;
 
         if (distanceAccumulator >= 1f) // Adjust this threshold as needed
         {
+            totalDistance += distance; // Accumulate total distance
+
             // Increment score by the integer part of the accumulated score
             score += Mathf.FloorToInt(distanceAccumulator);
 
@@ -70,5 +77,17 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         distanceAccumulator = 0f;
         UpdateScoreText();
+    }
+
+    // Call this method when a boss is spawned
+    public void BossActive(bool isActive)
+    {
+        isBossActive = isActive;
+    }
+    
+    // Method to get the total distance traveled
+    public float GetTotalDistance()
+    {
+        return totalDistance;
     }
 }

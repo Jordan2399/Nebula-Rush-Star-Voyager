@@ -29,7 +29,7 @@ public class SpaceshipSpawn : MonoBehaviour
 	{
 		// Determine the vertical bounds of the camera view
 		var screenHalfHeight = mainCamera.orthographicSize;
-		var verticalExtent = screenHalfHeight * 2f; //will this be used? if not, remove it
+		var verticalExtent = screenHalfHeight * 2f; //will this be used? if not, remove it // bro it might be used later so i kept it thinking of future use at last on the time of submission if not use then we will delete
 
 		// Determine the horizontal bounds of the camera view
 		var screenHalfWidth = screenHalfHeight * mainCamera.aspect;

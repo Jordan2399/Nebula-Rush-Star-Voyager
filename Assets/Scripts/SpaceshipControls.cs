@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 using UnityEngine.UI;
 
 public class SpaceshipControls : MonoBehaviour
@@ -174,6 +176,8 @@ public class SpaceshipControls : MonoBehaviour
             {
                 // Handle player death here
                 gameObject.SetActive(false); // Or Destroy(gameObject);
+                SceneManager.LoadScene("GameOverScene");
+
             }
             else
             {
