@@ -1925,7 +1925,7 @@ MonoBehaviour:
   movingSpeed: 10
   rigidbody: {fileID: 3811456674707440983}
   bulletPrefab: {fileID: 8572122261075759781, guid: ee55934d0b7e242089bcf220e6f3cc74, type: 3}
-  firePoint: {fileID: 8613863844569907617}
+  firePoint: {fileID: 0}
   bulletSpeed: 5
   invincibilityTime: 2
   healthBar: {fileID: 0}

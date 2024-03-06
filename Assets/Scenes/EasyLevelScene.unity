@@ -576,6 +576,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 215421012}
     - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 816428872}
+    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1234696866}
