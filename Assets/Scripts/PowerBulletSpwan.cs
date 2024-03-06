@@ -10,14 +10,14 @@ public class PowerBulletSpwan : MonoBehaviour
 	private float nextSpawnTime;
 
 	// Start is called before the first frame update
-	void Start()
+	private void Start()
 	{
 		mainCamera = Camera.main; // Cache the main camera
 		nextSpawnTime = Time.time + spawnRate; // Initialize the next spawn time
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		// Check if it's time to spawn a new enemy
 		if (Time.time >= nextSpawnTime)
@@ -54,24 +54,23 @@ public class PowerBulletSpwan : MonoBehaviour
 		var spawnSide = Random.Range(0, 3);
 
 		float spawnX, spawnY;
-		var powerbulletVelocity = Vector3.zero;
 
 		spawnX = maxSpawnX;
 		spawnY = Random.Range(-maxSpawnY, maxSpawnY);
 
-		powerbulletVelocity = new Vector2(-2f, 0);
+		Vector3 powerBulletVelocity = new Vector2(-2f, 0);
 
 		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
 
 		// Instantiate power bullet
-		GameObject powerbullet = Instantiate(powerBulletPrefab, spawnPosition, Quaternion.identity);
+		var powerBullet = Instantiate(powerBulletPrefab, spawnPosition, Quaternion.identity);
 
 		// Set velocity for the power bullet to move towards the left
-		var powerbulletRigidbody = powerbullet.GetComponent<Rigidbody2D>(); // Assuming you have a Rigidbody2D on the powerbulletPrefab
-		if (powerbulletRigidbody != null)
+		var powerBulletRigidbody = powerBullet.GetComponent<Rigidbody2D>(); // Assuming you have a Rigidbody2D on the powerbulletPrefab //TODO: repating: tryGetcomponent
+		if (powerBulletRigidbody is not null)
 		{
 			// Adjust the velocity based on the random angle
-			powerbulletRigidbody.velocity = powerbulletVelocity;
+			powerBulletRigidbody.velocity = powerBulletVelocity;
 		}
 		else
 		{

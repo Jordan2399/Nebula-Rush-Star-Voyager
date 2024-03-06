@@ -69,8 +69,8 @@ public class MeteorSpawn : MonoBehaviour
 
 			meteorRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
-			float randomXVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the X component
-			float randomYVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the Y component
+			var randomXVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the X component
+			var randomYVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the Y component
 			meteorVelocity = new Vector2(randomXVelocity, randomYVelocity);
 
 
@@ -82,8 +82,8 @@ public class MeteorSpawn : MonoBehaviour
 
 			meteorRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
-			float randomXVelocity = Random.Range(-2f, -8f);
-			float randomYVelocity = Random.Range(2f, 8f);
+			var randomXVelocity = Random.Range(-2f, -8f);
+			var randomYVelocity = Random.Range(2f, 8f);
 			meteorVelocity = new Vector2(randomXVelocity, randomYVelocity);
 		}
 		else
@@ -93,32 +93,24 @@ public class MeteorSpawn : MonoBehaviour
 
 			meteorRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
-			float randomXVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the X component
-			float randomYVelocity = Random.Range(-8f, 8f); // Random speed between -10 and -2 for the Y component
+			var randomXVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the X component
+			var randomYVelocity = Random.Range(-8f, 8f); // Random speed between -10 and -2 for the Y component
 			meteorVelocity = new Vector2(randomXVelocity, randomYVelocity);
 		}
 
 		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
 		Debug.Log("Degree is:" + meteorRotation);
-
-		
-
-		
 		
 		// Instantiate meteor
-		GameObject meteor = Instantiate(selectedMeteorPrefab, spawnPosition, meteorRotation);
-		
+		var meteor = Instantiate(selectedMeteorPrefab, spawnPosition, meteorRotation);
 		
 		// Set a random scale for the meteor
-		float randomScale = Random.Range(0.36f, 1.27f);
+		var randomScale = Random.Range(0.36f, 1.27f);
 		meteor.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
-
-		
-		
 		
 		// Set velocity for the meteor to move towards the left
-		var meteorRigidbody = meteor.GetComponent<Rigidbody2D>(); // Assuming you have a Rigidbody2D on the meteorPrefab
-		if (meteorRigidbody != null)
+		var meteorRigidbody = meteor.GetComponent<Rigidbody2D>(); // Assuming you have a Rigidbody2D on the meteorPrefab TODO: what if you don't --> tryGetcomponent
+		if (meteorRigidbody is not null)
 		{
 			// Adjust the velocity based on the random angle
 			meteorRigidbody.velocity = meteorVelocity;

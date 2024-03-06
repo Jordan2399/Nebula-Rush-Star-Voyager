@@ -89,8 +89,6 @@ public class SpaceshipControls : MonoBehaviour
         {
             Fire();
         }
-        
- 
     }
 
     private void FixedUpdate()

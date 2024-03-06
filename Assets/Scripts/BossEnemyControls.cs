@@ -27,7 +27,7 @@ public class BossEnemyControls : MonoBehaviour
 
 	private Vector2 GetObjectBoundsSize()
 	{
-		var collider = GetComponent<Collider2D>();
+		var collider = GetComponent<Collider2D>(); //TODO: tryGetComponent!
 		if (collider != null)
 		{
 			var bounds = collider.bounds;
@@ -43,14 +43,14 @@ public class BossEnemyControls : MonoBehaviour
 	void MoveBoss()
 	{
 		// Get the current position of the boss
-		Vector3 currentPosition = transform.position;
+		var currentPosition = transform.position;
 
 		// Calculate the new position based on the y-axis movement
-		float newY = Mathf.PingPong(Time.time * speed, Camera.main.orthographicSize * 2) - Camera.main.orthographicSize;
+		var newY = Mathf.PingPong(Time.time * speed, Camera.main.orthographicSize * 2) - Camera.main.orthographicSize;
 
 		// Calculate the screen boundaries
-		float minY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y + objectSize.y;
-		float maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y - objectSize.y;
+		var minY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y + objectSize.y;
+		var maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y - objectSize.y;
 
 		// Clamp the newY position within the screen limits
 		newY = Mathf.Clamp(newY, minY, maxY);

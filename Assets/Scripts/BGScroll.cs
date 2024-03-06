@@ -9,7 +9,7 @@ public class BGScroll : MonoBehaviour
 
     private void Update()
     {
-        float distanceThisFrame = speed * Time.deltaTime;
+        var distanceThisFrame = speed * Time.deltaTime;
         bgRenderer.material.mainTextureOffset += new Vector2(distanceThisFrame, 0);
 
         // Call the method to add score based on the distance traveled

@@ -38,10 +38,10 @@ public class EnemyMovement : MonoBehaviour
             Vector2 direction = (target.position - transform.position).normalized;
 
             // Move towards the target player
-            transform.Translate(direction * speed * Time.deltaTime, Space.World);
+            transform.Translate(direction * (speed * Time.deltaTime), Space.World);
 
             // Ensure the enemy is facing the direction of movement
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
