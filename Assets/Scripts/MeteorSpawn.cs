@@ -3,21 +3,23 @@ using UnityEngine;
 public class MeteorSpawn : MonoBehaviour
 {
 	public GameObject meteorPrefab; // Assign this in the Inspector
-	public float spawnRate = 2f; // The rate at which enemies will spawn (every 2 seconds by default)
-
+	//public float spawnRate = 2f; // The rate at which enemies will spawn (every 2 seconds by default)
+	
+	[SerializeField] private float spawnRate = 10f;
+	
 	private Camera mainCamera;
 	private float nextSpawnTime;
 
 	// Start is called before the first frame update
 	void Start()
-    {
+	{
 		mainCamera = Camera.main; // Cache the main camera
 		nextSpawnTime = Time.time + spawnRate; // Initialize the next spawn time
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update()
+	{
 		// Check if it's time to spawn a new enemy
 		if (Time.time >= nextSpawnTime)
 		{
@@ -49,14 +51,51 @@ public class MeteorSpawn : MonoBehaviour
 		var maxSpawnX = screenHalfWidth - bounds.extents.x;
 		var maxSpawnY = screenHalfHeight - bounds.extents.y;
 
-		// Set spawn position on the extreme right y-axis border
-		var spawnX = maxSpawnX;
-		var spawnY = Random.Range(-maxSpawnY, maxSpawnY);
+		// Randomly choose whether to spawn from top, bottom, or right side
+		var spawnSide = Random.Range(0, 3);
 
-		// Calculate spawn position with an offset from the center of the screen
+		float spawnX, spawnY;
+		var meteorRotation = Quaternion.identity; // Initialize with an appropriate default value
+		var meteorVelocity = Vector3.zero;
+
+		if (spawnSide == 0)
+		{
+			spawnX = Random.Range(0, maxSpawnX);
+			spawnY = maxSpawnY;
+
+			meteorRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+
+			float randomXVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the X component
+			float randomYVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the Y component
+			meteorVelocity = new Vector2(randomXVelocity, randomYVelocity);
+
+
+		}
+		else if (spawnSide == 1)
+		{
+			spawnX = Random.Range(0, maxSpawnX);
+			spawnY = -maxSpawnY;
+
+			meteorRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+
+			float randomXVelocity = Random.Range(-2f, -8f);
+			float randomYVelocity = Random.Range(2f, 8f);
+			meteorVelocity = new Vector2(randomXVelocity, randomYVelocity);
+		}
+		else
+		{
+			spawnX = maxSpawnX;
+			spawnY = Random.Range(-maxSpawnY, maxSpawnY);
+
+			meteorRotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+
+			float randomXVelocity = Random.Range(-8f, -2f); // Random speed between -10 and -2 for the X component
+			float randomYVelocity = Random.Range(-8f, 8f); // Random speed between -10 and -2 for the Y component
+			meteorVelocity = new Vector2(randomXVelocity, randomYVelocity);
+		}
+
 		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
-
-		var meteorRotation = Quaternion.Euler(0, 0, -90); // Adjust the Euler angles as needed for your prefab
+		Debug.Log("Degree is:" + meteorRotation);
 
 		// Instantiate meteor
 		GameObject meteor = Instantiate(meteorPrefab, spawnPosition, meteorRotation);
@@ -65,8 +104,7 @@ public class MeteorSpawn : MonoBehaviour
 		var meteorRigidbody = meteor.GetComponent<Rigidbody2D>(); // Assuming you have a Rigidbody2D on the meteorPrefab
 		if (meteorRigidbody != null)
 		{
-			// Adjust the velocity as needed
-			var meteorVelocity = new Vector2(-5f, 0f); // Example velocity: move left at a speed of 5 units per second
+			// Adjust the velocity based on the random angle
 			meteorRigidbody.velocity = meteorVelocity;
 		}
 		else
@@ -74,5 +112,4 @@ public class MeteorSpawn : MonoBehaviour
 			Debug.LogError("Meteor prefab must have a Rigidbody2D component for velocity control.");
 		}
 	}
-
 }

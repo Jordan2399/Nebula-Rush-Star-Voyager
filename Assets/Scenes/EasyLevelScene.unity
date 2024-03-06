@@ -347,6 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 392134660}
   - component: {fileID: 392134661}
+  - component: {fileID: 392134662}
   m_Layer: 0
   m_Name: EmptyMeteors
   m_TagString: Untagged
@@ -376,12 +377,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392134659}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 872e940d23ee286449ae5b26bf72f935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   meteorPrefab: {fileID: 5560395210288662899, guid: ff290c1a5df59b14689c4086bbb37fbc, type: 3}
+  spawnRate: 10
+--- !u!114 &392134662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392134659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c332116223fe1c84dae5a96b35141a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerBulletPrefab: {fileID: 0}
   spawnRate: 2
 --- !u!20 &519420031 stripped
 Camera:
@@ -885,7 +900,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609742146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb9140914bffa254ab51802688f5d5d3, type: 3}
   m_Name: 
@@ -915,7 +930,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609742146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d0c26c45d53aa54187e212f92696625, type: 3}
   m_Name: 
