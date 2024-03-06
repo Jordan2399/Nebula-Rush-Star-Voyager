@@ -1924,12 +1924,9 @@ MonoBehaviour:
   cubeTransform: {fileID: 8613863844569907617}
   movingSpeed: 10
   rigidbody: {fileID: 3811456674707440983}
-  bulletPrefabL1: {fileID: 8572122261075759781, guid: ee55934d0b7e242089bcf220e6f3cc74, type: 3}
-  bulletPrefabL2: {fileID: 8572122261075759781, guid: 007c0da94fbdfab47970e5a519e4cb55, type: 3}
-  bulletPrefabL3: {fileID: 8572122261075759781, guid: afa243df8fd6fd84287915926c1b2e3e, type: 3}
-  firePoint: {fileID: 8613863844569907617}
+  bulletPrefab: {fileID: 8572122261075759781, guid: ee55934d0b7e242089bcf220e6f3cc74, type: 3}
+  firePoint: {fileID: 0}
   bulletSpeed: 5
-  PlayerLavel: 3
   invincibilityTime: 2
   healthBar: {fileID: 0}
   move: {fileID: -9197900716770029253, guid: 9f5cbc81183a0b4468856531176fc321, type: 3}

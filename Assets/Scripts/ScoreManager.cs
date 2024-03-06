@@ -37,7 +37,7 @@ public class ScoreManager : MonoBehaviour
         if (isBossActive) return; // Do not accumulate distance or score if a boss is active
 
         // Convert distance to score using the rate factor
-        float scoreToAdd = distance * scorePerUnit;
+        var scoreToAdd = distance * scorePerUnit;
 
         // Accumulate the score to add
         distanceAccumulator += scoreToAdd;
