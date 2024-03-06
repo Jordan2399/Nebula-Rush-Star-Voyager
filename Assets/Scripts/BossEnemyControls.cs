@@ -20,7 +20,7 @@ public class BossEnemyControls : MonoBehaviour
 		InvokeRepeating("SpawnSpecialBullet", 0f, specialBulletInterval);
 	}
 
-	void Update()
+	private void Update()
 	{
 		MoveBoss();
 	}
@@ -28,7 +28,7 @@ public class BossEnemyControls : MonoBehaviour
 	private Vector2 GetObjectBoundsSize()
 	{
 		var collider = GetComponent<Collider2D>(); //TODO: tryGetComponent!
-		if (collider != null)
+		if (collider is not null)
 		{
 			var bounds = collider.bounds;
 			return new Vector2(bounds.extents.x, bounds.extents.y);
@@ -40,7 +40,7 @@ public class BossEnemyControls : MonoBehaviour
 		}
 	}
 
-	void MoveBoss()
+	private void MoveBoss()
 	{
 		// Get the current position of the boss
 		var currentPosition = transform.position;
@@ -62,13 +62,13 @@ public class BossEnemyControls : MonoBehaviour
 		transform.Rotate(Vector3.forward * Time.deltaTime * 10f);
 	}
 
-	void SpawnNormalBullet()
+	private void SpawnNormalBullet()
 	{
 		// Instantiate a normal bullet at the boss's position
 		Instantiate(normalBulletPrefab, firePointN.position, firePointN.rotation);
 	}
 
-	void SpawnSpecialBullet()
+	private void SpawnSpecialBullet()
 	{
 		// Instantiate a special bullet at the boss's position
 		Instantiate(specialBulletPrefab, firePointS1.position, firePointS1.rotation);
