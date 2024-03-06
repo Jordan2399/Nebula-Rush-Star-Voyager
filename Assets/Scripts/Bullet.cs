@@ -12,6 +12,19 @@ public class Bullet : MonoBehaviour
         animator = GetComponent<Animator>(); //TODO: TryGetComponent!!!!
     }
     
+    
+    
+    // Update is called once per frame
+    void Update()
+    {
+        // Destroy the bullet if it goes out of the screen
+        if (!GetComponent<Renderer>().isVisible)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    
     // Call this function when you want to play the explosion animation
     private void PlayExplosionAnimation()
     {
