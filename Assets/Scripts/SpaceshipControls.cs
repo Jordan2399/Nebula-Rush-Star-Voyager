@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
 using UnityEngine.UI;
 
 public class SpaceshipControls : MonoBehaviour
@@ -13,15 +12,18 @@ public class SpaceshipControls : MonoBehaviour
 
     [SerializeField] private int movingSpeed = 10;
     [SerializeField] private Rigidbody2D rigidbody;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject bulletPrefabL1;
+    [SerializeField] private GameObject bulletPrefabL2;
+    [SerializeField] private GameObject bulletPrefabL3;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float bulletSpeed = 5f;
+    [SerializeField] private int PlayerLavel = 1;
 
     [SerializeField] private float invincibilityTime = 2.0f;
     private bool isInvincible;
 
     public HealthBar healthBar;
-    
+
 
     private List<SpriteRenderer> spriteRenderers; // Store all sprite renderers
     // [SerializeField] private GameObject shieldGameObject; // Assign in the inspector
@@ -39,10 +41,10 @@ public class SpaceshipControls : MonoBehaviour
     private Vector3 lastPosition;
 
 
-	private ScoreManager scoreManager;
+    private ScoreManager scoreManager;
 
 
-	private void Start()
+    private void Start()
     {
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
@@ -50,14 +52,14 @@ public class SpaceshipControls : MonoBehaviour
         lastPosition = transform.position;
 
 
-		// Find and cache the PlayerScore script on the player object
-		/** playerScore = FindObjectOfType<PlayerScore>();
-		if (playerScore == null)
-		{
-			UnityEngine.Debug.LogError("PlayerScore script not found on the player object!");
-		}
+        // Find and cache the PlayerScore script on the player object
+        /** playerScore = FindObjectOfType<PlayerScore>();
+        if (playerScore == null)
+        {
+            UnityEngine.Debug.LogError("PlayerScore script not found on the player object!");
+        }
         **/
-	}
+    }
 
     private void Awake()
     {
@@ -89,8 +91,6 @@ public class SpaceshipControls : MonoBehaviour
         {
             Fire();
         }
-        
- 
     }
 
     private void FixedUpdate()
@@ -141,7 +141,7 @@ public class SpaceshipControls : MonoBehaviour
         //         Debug.Log("Moving Down");
         //     }
         // }
-        
+
         // float distanceTraveled = Vector3.Distance(transform.position, lastPosition);
         // ScoreManager.Instance.AddDistanceScore(distanceTraveled);
         // lastPosition = transform.position;
@@ -149,7 +149,23 @@ public class SpaceshipControls : MonoBehaviour
 
     public void Fire()
     {
-        var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        var bullet = new GameObject();
+
+        if (PlayerLavel == 1)
+        {
+            bullet = Instantiate(bulletPrefabL1, firePoint.position, firePoint.rotation);
+        }
+        else if (PlayerLavel == 2)
+        {
+            bullet = Instantiate(bulletPrefabL2, firePoint.position, firePoint.rotation);
+        }
+        else if (PlayerLavel == 3)
+        {
+            bullet = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
+            
+        }
+
+
         if (bullet.TryGetComponent<Rigidbody2D>(out var rigidBody))
         {
             rigidBody.velocity = transform.up * bulletSpeed;
@@ -177,7 +193,6 @@ public class SpaceshipControls : MonoBehaviour
                 // Handle player death here
                 gameObject.SetActive(false); // Or Destroy(gameObject);
                 SceneManager.LoadScene("GameOverScene");
-
             }
             else
             {
@@ -194,7 +209,7 @@ public class SpaceshipControls : MonoBehaviour
     //     transform.position = Vector3.zero;
     //     StartCoroutine(InvincibilityRoutine());
     // }
-    
+
     private void RespawnPlayer()
     {
         // Calculate the left boundary position based on the camera's view
