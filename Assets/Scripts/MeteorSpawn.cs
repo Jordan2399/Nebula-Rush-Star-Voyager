@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MeteorSpawn : MonoBehaviour
 {
-	public GameObject meteorPrefab; // Assign this in the Inspector
+	public GameObject[] meteorPrefabs; // Assign this in the Inspector
 	//public float spawnRate = 2f; // The rate at which enemies will spawn (every 2 seconds by default)
 	
 	[SerializeField] private float spawnRate = 10f;
@@ -37,8 +37,12 @@ public class MeteorSpawn : MonoBehaviour
 		// Determine the horizontal bounds of the camera view
 		var screenHalfWidth = screenHalfHeight * mainCamera.aspect;
 
+		// Choose a random prefab from the array
+		GameObject selectedMeteorPrefab = meteorPrefabs[Random.Range(0, meteorPrefabs.Length)];
+
+		
 		// Get the enemy renderer component
-		var meteorRenderer = meteorPrefab.GetComponent<Renderer>();
+		var meteorRenderer = selectedMeteorPrefab.GetComponent<Renderer>();
 
 		if (meteorRenderer is null)
 		{
@@ -97,9 +101,21 @@ public class MeteorSpawn : MonoBehaviour
 		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
 		Debug.Log("Degree is:" + meteorRotation);
 
-		// Instantiate meteor
-		GameObject meteor = Instantiate(meteorPrefab, spawnPosition, meteorRotation);
+		
 
+		
+		
+		// Instantiate meteor
+		GameObject meteor = Instantiate(selectedMeteorPrefab, spawnPosition, meteorRotation);
+		
+		
+		// Set a random scale for the meteor
+		float randomScale = Random.Range(0.36f, 1.27f);
+		meteor.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+		
+		
+		
 		// Set velocity for the meteor to move towards the left
 		var meteorRigidbody = meteor.GetComponent<Rigidbody2D>(); // Assuming you have a Rigidbody2D on the meteorPrefab
 		if (meteorRigidbody != null)
