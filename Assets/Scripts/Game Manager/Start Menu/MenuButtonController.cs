@@ -9,7 +9,17 @@ public class MenuButtonController : MonoBehaviour
     public int index;
     [SerializeField] bool keyDown;
     [SerializeField] int maxIndex;
+    
+    // References to AudioSources
     public AudioSource audioSource;
+    public AudioSource backgroundMusicSource;
+    public AudioSource buttonNavigationSoundSource;
+    public AudioSource submitSoundSource;
+    
+    // Audio clips for background music and button navigation sound
+    public AudioClip backgroundMusicClip;
+    public AudioClip buttonNavigationSoundClip;
+    public AudioClip submitSoundClip;
 
     // Reference to the Input Actions
     public InputActionReference navigate;
@@ -31,7 +41,15 @@ public class MenuButtonController : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        // Get AudioSources components
+        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+        buttonNavigationSoundSource = gameObject.AddComponent<AudioSource>();
+        submitSoundSource = gameObject.AddComponent<AudioSource>();
+
+        // Set up background music
+        backgroundMusicSource.clip = backgroundMusicClip;
+        backgroundMusicSource.loop = true;
+        backgroundMusicSource.Play();
     }
 
     void Update()
@@ -67,6 +85,9 @@ public class MenuButtonController : MonoBehaviour
                     }
                 }
                 keyDown = true;
+                
+                // Play button navigation sound
+                buttonNavigationSoundSource.PlayOneShot(buttonNavigationSoundClip);
             }
         }
         else
@@ -77,12 +98,14 @@ public class MenuButtonController : MonoBehaviour
         // Use the Submit action's triggered state
         if(submitValue)
         {
+            submitSoundSource.PlayOneShot(submitSoundClip);
             // Perform your submit action here, for example:
             Debug.Log("Submit action was triggered."+index);
             // You can call a function or perform an action here.
             if (index == 0)
             {
                 SceneManager.LoadScene("EasyLevelScene");
+                
             }
         }
     }
