@@ -12,11 +12,13 @@ public class SpaceshipControls : MonoBehaviour
 
     [SerializeField] private int movingSpeed = 10;
     [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefabL1;
     [SerializeField] private GameObject bulletPrefabL2;
     [SerializeField] private GameObject bulletPrefabL3;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float bulletSpeed = 5f;
+    [SerializeField] private float bullet1Speed = 5f;
+    [SerializeField] private float bullet2Speed = 5f;
+    [SerializeField] private float bullet3Speed = 5f;
     [SerializeField] private int PlayerLavel = 1;
 
     [SerializeField] private float invincibilityTime = 2.0f;
@@ -154,28 +156,46 @@ public class SpaceshipControls : MonoBehaviour
         if (PlayerLavel == 1)
         {
             bullet = Instantiate(bulletPrefabL1, firePoint.position, firePoint.rotation);
+            SetBulletVelocity(bullet,bullet1Speed);
         }
         else if (PlayerLavel == 2)
         {
             bullet = Instantiate(bulletPrefabL2, firePoint.position, firePoint.rotation);
+            SetBulletVelocity(bullet,bullet2Speed);
         }
         else if (PlayerLavel == 3)
         {
-            bullet = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
+            // bullet = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
+            
+            // Instantiate the middle bullet going straight
+            var bulletMiddle = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
+            SetBulletVelocity(bulletMiddle,bullet3Speed);
+
+            // Calculate rotations for the angled bullets
+            Quaternion rotationLeft = Quaternion.Euler(0, 0, firePoint.rotation.eulerAngles.z + 10);
+            Quaternion rotationRight = Quaternion.Euler(0, 0, firePoint.rotation.eulerAngles.z - 10);
+
+            // Instantiate the left bullet with a rotation of 10 degrees
+            var bulletLeft = Instantiate(bulletPrefabL3, firePoint.position, rotationLeft);
+            SetBulletVelocity(bulletLeft,bullet3Speed);
+
+            // Instantiate the right bullet with a rotation of -10 degrees
+            var bulletRight = Instantiate(bulletPrefabL3, firePoint.position, rotationRight);
+            SetBulletVelocity(bulletRight,bullet3Speed);
             
         }
-
-
+    }
+    private void SetBulletVelocity(GameObject bullet,float bulletSpeed)
+    {
         if (bullet.TryGetComponent<Rigidbody2D>(out var rigidBody))
         {
-            rigidBody.velocity = transform.up * bulletSpeed;
+            rigidBody.velocity = bullet.transform.up * bulletSpeed;
         }
         else
         {
             Debug.LogWarning("Rigidbody2D component not found on the bullet prefab.");
         }
     }
-
 
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
     private void OnTriggerEnter2D(Collider2D other)

@@ -17,8 +17,8 @@ public class EnemySpaceshipBullet : MonoBehaviour
     private void Start()
     {
         // Find the player in the scene and assign it
-        player = GameObject.FindGameObjectWithTag("Player"); //TODO: better: create a manager that you can access static. Then save the ship as SerializeField. This method you have used is inefficient!
-        //player = PlayerManager.instance.player;
+        // player = GameObject.FindGameObjectWithTag("Player"); //TODO: better: create a manager that you can access static. Then save the ship as SerializeField. This method you have used is inefficient!
+        player = PlayerManager.instance.player;
         // Initialize the nextFireTime
         nextFireTime = Time.time + firingRate;
     }
