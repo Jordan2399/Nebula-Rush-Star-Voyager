@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 392134661}
   - component: {fileID: 392134662}
   - component: {fileID: 392134663}
+  - component: {fileID: 392134664}
   m_Layer: 0
   m_Name: EmptyMeteors
   m_TagString: Untagged
@@ -378,7 +379,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392134659}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 872e940d23ee286449ae5b26bf72f935, type: 3}
   m_Name: 
@@ -387,7 +388,7 @@ MonoBehaviour:
   - {fileID: 151664, guid: fa49e460baf435b4780da7196c2ab473, type: 3}
   - {fileID: 141316, guid: 84cc3cd234dfc9d4d9d2e92c0eb0af75, type: 3}
   - {fileID: 130102, guid: 04d0bf4be9447154188d86f6e3b8dce9, type: 3}
-  spawnRate: 10
+  spawnRate: 2
 --- !u!114 &392134662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,13 +396,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392134659}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c332116223fe1c84dae5a96b35141a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerBulletPrefab: {fileID: 4910147855411655327, guid: fe0d99a5ba62d0f4c8cfbf8bc1decb87, type: 3}
-  spawnRate: 7
+  powerBulletPrefab: {fileID: 5452554398591073056, guid: 067bcee1cffc5a0429211d859aae71fd, type: 3}
+  spawnRate: 2
 --- !u!114 &392134663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,13 +410,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392134659}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50ad20041946f2f4c804c8dba311814a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthspawnPrefab: {fileID: 4910147855411655327, guid: 92dec51c18f246441bea1ef26d5c863e, type: 3}
+  healthspawnPrefab: {fileID: 5452554398591073056, guid: 688990ba932928f478f1c0192402fb3b, type: 3}
   spawnRate: 9
+--- !u!114 &392134664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392134659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275f9f052ae68c5429fbfe623454971e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldspawnPrefab: {fileID: 5452554398591073056, guid: b5135c44b028f1441a8a3d174bc87b27, type: 3}
+  spawnRate: 1
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 6694398773519484407, guid: f5f8e95378ce2124897e5145607e3b72, type: 3}
@@ -553,7 +568,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 97ae1cb33328a91468b0766edab1e6ae, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -582,7 +597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8b30fb5baf0a4914dba4480dfc912bdb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -697,7 +712,7 @@ PrefabInstance:
       objectReference: {fileID: 1234696866}
     - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
       propertyPath: PlayerLavel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
       propertyPath: bullet2Speed
@@ -1223,7 +1238,7 @@ MonoBehaviour:
   dividerPrefab: {fileID: 6132632773488115599, guid: 65b00f67c2edcef408a3efb4c89f60a7, type: 3}
   dividerContainer: {fileID: 1234696863}
   maxLives: 6
-  currentLives: 0
+  currentLives: 5
 --- !u!1 &1388141028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,14 +1278,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388141028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e71063d4fea954f49a971b86c4edd7f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 2545321661638938526, guid: b22bfe4100e71ce4da533e005eb0dea0, type: 3}
   bossHealth: {fileID: 1105723783}
-  levelDistanceThreshold: 0.01
+  levelDistanceThreshold: 0.005
   screenFlickerAnimator: {fileID: 728212574}
 --- !u!1 &1609742146
 GameObject:
@@ -1983,6 +1998,10 @@ PrefabInstance:
     - target: {fileID: 8669246394109566253, guid: 009266c14fbf341ccb69b10b6a399180, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669246394109566253, guid: 009266c14fbf341ccb69b10b6a399180, type: 3}
+      propertyPath: m_TagString
+      value: PowerHealth
       objectReference: {fileID: 0}
     - target: {fileID: 9126073405580088354, guid: 009266c14fbf341ccb69b10b6a399180, type: 3}
       propertyPath: scorePerUnit

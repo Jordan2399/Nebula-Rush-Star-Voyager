@@ -25,7 +25,12 @@ public class SpaceshipControls : MonoBehaviour
     [SerializeField] private float muzzleDisplayTime = 0.1f; // Time in seconds to display the muzzle flash
 
     [SerializeField] private float invincibilityTime = 2.0f;
-    private bool isInvincible;
+    private bool isInvincible = false;
+    public float invincibilityDuration = 4f; // Default duration for invincibility
+    private float remainingInvincibilityTime = 2f;
+    private Coroutine invincibilityCoroutine;
+    private bool canReceiveNewShield = true;
+    private float shieldPickupCooldown = 0.5f; 
 
     public HealthBar healthBar;
 
@@ -91,6 +96,7 @@ public class SpaceshipControls : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("remainingInvincibilityTime:" + remainingInvincibilityTime);
         moveDirection = move.action.ReadValue<Vector2>();
         if (fire.action.triggered)
         {
@@ -187,6 +193,7 @@ public class SpaceshipControls : MonoBehaviour
             var bulletRight = Instantiate(bulletPrefabL3, firePoint.position, rotationRight);
             SetBulletVelocity(bulletRight, bullet3Speed);
         }
+
         StartCoroutine(ShowMuzzleFlash());
     }
 
@@ -205,35 +212,65 @@ public class SpaceshipControls : MonoBehaviour
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("PlayerBullet") && !isInvincible)
+        switch (other.tag)
         {
-            Debug.Log("Player Collided with something other that playerBullet");
-            healthBar.LoseLife();
+            case "PlayerBullet":
+                // Ignore cllision with player's own bullet
+                break;
+            case "PowerHealth":
+                // Increase Life
+                Destroy(other.gameObject);
+                GetLife();
+                break;
+            case "PowerShield":
+                // GetShield
+                Destroy(other.gameObject);
+                GetShield();
+                break;
+            case "PowerBullet":
+                //GetBullet
+                Destroy(other.gameObject);
+                GetBullet();
+                break;
+            case "Meteors":
+                if (!isInvincible)
+                {
+                    HandleHarmfulCollision();
+                }
 
-            // Instantiate explosion effect
-            // Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                break;
+            default:
+                if (!isInvincible)
+                {
+                    HandleHarmfulCollision();
+                    Destroy(other.gameObject);
+                }
 
-            if (healthBar.currentLives <= 0)
-            {
-                // Handle player death here
-                gameObject.SetActive(false); // Or Destroy(gameObject);
-                SceneManager.LoadScene("GameOverScene");
-            }
-            else
-            {
-                // Handle player hit but not dead, such as respawning
-                RespawnPlayer();
-            }
+                break;
         }
     }
 
 
-    // private void RespawnPlayer()
-    // {
-    //     // Your respawn logic here (e.g. reset position)
-    //     transform.position = Vector3.zero;
-    //     StartCoroutine(InvincibilityRoutine());
-    // }
+    private void HandleHarmfulCollision()
+    {
+        healthBar.LoseLife();
+        ReducePlayerLevel();
+
+        // Instantiate explosion effect
+        // Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+        if (healthBar.currentLives <= 0)
+        {
+            // Handle player death here
+            gameObject.SetActive(false); // Or Destroy(gameObject);
+            SceneManager.LoadScene("GameOverScene");
+        }
+        else
+        {
+            // Handle player hit but not dead, such as respawning
+            RespawnPlayer();
+        }
+    }
 
     private void RespawnPlayer()
     {
@@ -288,6 +325,68 @@ public class SpaceshipControls : MonoBehaviour
         // shieldGameObject.SetActive(false);
     }
 
+
+    private void GetLife()
+    {
+        Debug.Log("current life is:" + healthBar.currentLives);
+        healthBar.GainLife();
+        Debug.Log("current life is2:" + healthBar.currentLives);
+    }
+
+    private void GetBullet()
+    {
+        IncreasePlayerLevel();
+    }
+
+    // Call this function when player picks up a shield power-up
+    public void GetShield()
+    {
+        if (canReceiveNewShield)
+        {
+            remainingInvincibilityTime += invincibilityDuration;
+            canReceiveNewShield = false;
+            StartCoroutine(ShieldPickupCooldownRoutine());
+
+            if (!isInvincible)
+            {
+                isInvincible = true;
+                if (invincibilityCoroutine != null)
+                {
+                    StopCoroutine(invincibilityCoroutine);
+                }
+                invincibilityCoroutine = StartCoroutine(InvincibilityCountdown());
+            }
+        }
+    }
+    private IEnumerator ShieldPickupCooldownRoutine()
+    {
+        yield return new WaitForSeconds(shieldPickupCooldown);
+        canReceiveNewShield = true; // Reset flag after cooldown
+    }
+
+    private void ReducePlayerLevel()
+    {
+        PlayerLavel = Mathf.Max(PlayerLavel - 1, 1); // Ensure player level does not go below 1
+    }
+
+    private void IncreasePlayerLevel()
+    {
+        PlayerLavel = Mathf.Min(PlayerLavel + 1, 3); // Ensure player level does not exceed max level
+    }
+
+    private IEnumerator InvincibilityCountdown()
+    {
+        while (remainingInvincibilityTime > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+            remainingInvincibilityTime -= 1f;
+        }
+
+        // After the loop, ensure isInvincible is set to false and cleanup
+        isInvincible = false;
+        remainingInvincibilityTime = 0f; // Reset to ensure clean state
+        // Additional cleanup or state reset as needed
+    }
 
     private IEnumerator ShowMuzzleFlash()
     {
