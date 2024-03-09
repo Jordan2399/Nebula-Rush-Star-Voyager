@@ -6,6 +6,8 @@ public class BossEnemyControls : MonoBehaviour
     [SerializeField] private float speed = 5f; // Adjust the speed as needed
     private Vector2 objectSize;
     [SerializeField] private GameObject normalBulletPrefab;
+    [SerializeField] private GameObject muzzleFlashObject;
+    [SerializeField] private float muzzleDisplayTime = 0.1f; // Time in seconds to display the muzzle flash
     [SerializeField] private GameObject specialBulletPrefab;
     [SerializeField] private float normalBulletInterval = 2f; // Time between normal bullet spawns
     [SerializeField] private float specialBulletInterval = 5f; // Time between special bullet spawns
@@ -27,7 +29,7 @@ public class BossEnemyControls : MonoBehaviour
     {
         player = PlayerManager.instance.player;
         objectSize = GetObjectBoundsSize();
-        // InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
+        InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
         // InvokeRepeating("SpawnSpecialBullet", 0f, specialBulletInterval + specialBulletDuration + 1.5f);
         StartCoroutine(SpecialBulletRoutine());
     }
@@ -93,6 +95,7 @@ public class BossEnemyControls : MonoBehaviour
 
     private void SpawnNormalBullet()
     {
+        StartCoroutine(ShowMuzzleFlash());
         var directionToPlayer = getPlayerDirection();
         var bulletN = Instantiate(normalBulletPrefab, firePointN.position, firePointN.rotation);
         var rigidbody = bulletN.GetComponent<Rigidbody2D>();
@@ -186,4 +189,12 @@ public class BossEnemyControls : MonoBehaviour
     //         Debug.LogError("LaserController script not found on the instantiated laser prefab.");
     //     }
     // }
+    
+    
+    private IEnumerator ShowMuzzleFlash()
+    {
+        muzzleFlashObject.SetActive(true); // Show the muzzle flash
+        yield return new WaitForSeconds(muzzleDisplayTime); // Wait for the specified duration
+        muzzleFlashObject.SetActive(false); // Hide the muzzle flash
+    }
 }

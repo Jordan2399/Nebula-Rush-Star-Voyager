@@ -21,6 +21,9 @@ public class SpaceshipControls : MonoBehaviour
     [SerializeField] private float bullet3Speed = 5f;
     [SerializeField] private int PlayerLavel = 1;
 
+    [SerializeField] private GameObject muzzleFlashObject;
+    [SerializeField] private float muzzleDisplayTime = 0.1f; // Time in seconds to display the muzzle flash
+
     [SerializeField] private float invincibilityTime = 2.0f;
     private bool isInvincible;
 
@@ -151,25 +154,26 @@ public class SpaceshipControls : MonoBehaviour
 
     public void Fire()
     {
-        var bullet = new GameObject();
+        // var bullet = new GameObject();
+        GameObject bullet;
 
         if (PlayerLavel == 1)
         {
             bullet = Instantiate(bulletPrefabL1, firePoint.position, firePoint.rotation);
-            SetBulletVelocity(bullet,bullet1Speed);
+            SetBulletVelocity(bullet, bullet1Speed);
         }
         else if (PlayerLavel == 2)
         {
             bullet = Instantiate(bulletPrefabL2, firePoint.position, firePoint.rotation);
-            SetBulletVelocity(bullet,bullet2Speed);
+            SetBulletVelocity(bullet, bullet2Speed);
         }
         else if (PlayerLavel == 3)
         {
             // bullet = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
-            
+
             // Instantiate the middle bullet going straight
             var bulletMiddle = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
-            SetBulletVelocity(bulletMiddle,bullet3Speed);
+            SetBulletVelocity(bulletMiddle, bullet3Speed);
 
             // Calculate rotations for the angled bullets
             Quaternion rotationLeft = Quaternion.Euler(0, 0, firePoint.rotation.eulerAngles.z + 10);
@@ -177,15 +181,16 @@ public class SpaceshipControls : MonoBehaviour
 
             // Instantiate the left bullet with a rotation of 10 degrees
             var bulletLeft = Instantiate(bulletPrefabL3, firePoint.position, rotationLeft);
-            SetBulletVelocity(bulletLeft,bullet3Speed);
+            SetBulletVelocity(bulletLeft, bullet3Speed);
 
             // Instantiate the right bullet with a rotation of -10 degrees
             var bulletRight = Instantiate(bulletPrefabL3, firePoint.position, rotationRight);
-            SetBulletVelocity(bulletRight,bullet3Speed);
-            
+            SetBulletVelocity(bulletRight, bullet3Speed);
         }
+        StartCoroutine(ShowMuzzleFlash());
     }
-    private void SetBulletVelocity(GameObject bullet,float bulletSpeed)
+
+    private void SetBulletVelocity(GameObject bullet, float bulletSpeed)
     {
         if (bullet.TryGetComponent<Rigidbody2D>(out var rigidBody))
         {
@@ -281,5 +286,13 @@ public class SpaceshipControls : MonoBehaviour
         isInvincible = false;
         // Disable the shield visual
         // shieldGameObject.SetActive(false);
+    }
+
+
+    private IEnumerator ShowMuzzleFlash()
+    {
+        muzzleFlashObject.SetActive(true); // Show the muzzle flash
+        yield return new WaitForSeconds(muzzleDisplayTime); // Wait for the specified duration
+        muzzleFlashObject.SetActive(false); // Hide the muzzle flash
     }
 }
