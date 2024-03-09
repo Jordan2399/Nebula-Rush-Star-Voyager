@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: -481742746163390719}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -245,6 +245,7 @@ MonoBehaviour:
   specialBulletPrefab: {fileID: 2287664024444800279, guid: 3a2dadfdfdb2efe4a810f7de7b9b0dbe, type: 3}
   normalBulletInterval: 2
   specialBulletInterval: 5
+  specialBulletDuration: 3
   firePointN: {fileID: 3595300392290024564}
   firePointS1: {fileID: 6196407556767247390}
   firePointS2: {fileID: 8382196479059916781}
@@ -253,7 +254,6 @@ MonoBehaviour:
   bulletNSpeed: 2
   bulletSSpeed: 2
   initialLaserDelay: 10
-  firingInterval: 5
 --- !u!60 &8737919001316231806
 PolygonCollider2D:
   m_ObjectHideFlags: 0

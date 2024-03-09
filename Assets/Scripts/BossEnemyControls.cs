@@ -176,24 +176,59 @@ public class BossEnemyControls : MonoBehaviour
     }
 
 
-    // private void FireLaser(Transform firePoint)
-    // {
-    //     // GameObject laserInstance = Instantiate(specialBulletPrefab, firePoint.position, Quaternion.identity);
-    //     GameObject laserInstance = Instantiate(specialBulletPrefab, firePoint.position, Quaternion.identity, firePoint);
-    //
-    //     // laserInstance.transform.SetParent(firePoint, false);
-    //     laserInstance.transform.localPosition = Vector3.zero;
-    //     laserInstance.transform.localRotation = Quaternion.identity;
-    //
-    //
-    //     BossL1LaserController laserController = laserInstance.GetComponent<BossL1LaserController>();
-    //     if (laserController != null)
-    //     {
-    //         laserController.ActivateLaser(firePoint, specialBulletDuration);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("LaserController script not found on the instantiated laser prefab.");
-    //     }
-    // }
+	// private void FireLaser(Transform firePoint)
+	// {
+	//     // GameObject laserInstance = Instantiate(specialBulletPrefab, firePoint.position, Quaternion.identity);
+	//     GameObject laserInstance = Instantiate(specialBulletPrefab, firePoint.position, Quaternion.identity, firePoint);
+	//
+	//     // laserInstance.transform.SetParent(firePoint, false);
+	//     laserInstance.transform.localPosition = Vector3.zero;
+	//     laserInstance.transform.localRotation = Quaternion.identity;
+	//
+	//
+	//     BossL1LaserController laserController = laserInstance.GetComponent<BossL1LaserController>();
+	//     if (laserController != null)
+	//     {
+	//         laserController.ActivateLaser(firePoint, specialBulletDuration);
+	//     }
+	//     else
+	//     {
+	//         Debug.LogError("LaserController script not found on the instantiated laser prefab.");
+	//     }
+	// }
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("PlayerBullet"))
+		{
+			// Assuming bullets have a script or component that defines the damage they deal
+			Bullet bullet = other.GetComponent<Bullet>();
+			Debug.Log(bullet);
+			if (bullet != null)
+			{
+				int damageAmount = bullet.getDamagePoint(); // Adjust this based on your bullet script
+				Debug.Log(enemyBossHealth);
+
+				enemyBossHealth.TakeDamage(damageAmount);
+			}
+
+			// Instantiate explosion effect
+			// Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+			if (enemyBossHealth.currentHealth <= 0)
+			{
+				// Handle boss defeat here
+				gameObject.SetActive(false); // Or Destroy(gameObject);
+											 //SceneManager.LoadScene("VictoryScene");
+			}
+			else
+			{
+				// Handle boss hit but not defeated
+				// Add any additional logic here if needed
+			}
+		}
+		else
+		{
+			Debug.Log("Player Collided with something other than PlayerBullet");
+		}
+	}
 }

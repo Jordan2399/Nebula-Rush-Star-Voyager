@@ -33,6 +33,8 @@ public class EnemyBossHealth : MonoBehaviour
 	public void TakeDamage(int damageAmount)
 	{
 		currentHealth = Mathf.Max(currentHealth - damageAmount, 0); // Ensure health doesn't go below 0
+		Debug.Log("current health is " + currentHealth);
+		
 		UpdateHealthBar();
 
 		if (currentHealth <= 0)

@@ -70,6 +70,7 @@ public class LevelManager : MonoBehaviour
 
     public void BossDefeated()
     {
+        Debug.Log("Boss is killed");
 		bossHealth.SetActive(false);
 		// Start next level or show victory screen
 	}
