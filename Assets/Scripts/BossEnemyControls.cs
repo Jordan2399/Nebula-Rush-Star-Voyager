@@ -21,13 +21,23 @@ public class BossEnemyControls : MonoBehaviour
     [SerializeField] private float bulletSSpeed = 10f; // Adjust the speed as needed
 
     private GameObject player;
+    private EnemyBossHealth enemyBossHealth;
 
     [SerializeField] private float initialLaserDelay = 10f;
 
 
     private void Start()
     {
-        player = PlayerManager.instance.player;
+		// Try to find the EnemyBossHealth component in the Canvas
+		enemyBossHealth = FindObjectOfType<EnemyBossHealth>();
+
+		if (enemyBossHealth == null)
+		{
+			Debug.LogError("EnemyBossHealth component not found in the scene.");
+		}
+
+
+		player = PlayerManager.instance.player;
         objectSize = GetObjectBoundsSize();
         InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
         // InvokeRepeating("SpawnSpecialBullet", 0f, specialBulletInterval + specialBulletDuration + 1.5f);
