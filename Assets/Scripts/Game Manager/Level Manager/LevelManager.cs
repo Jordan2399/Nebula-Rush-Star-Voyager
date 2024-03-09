@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public GameObject bossPrefab; // Assign this in the Inspector
-    public float levelDistanceThreshold; // Distance before the boss appears
+    public GameObject bossPrefab;
+	public GameObject bossHealth;// Assign this in the Inspector
+	public float levelDistanceThreshold; // Distance before the boss appears
     private bool bossSpawned = false;
     
     private Camera mainCamera;
@@ -62,10 +63,14 @@ public class LevelManager : MonoBehaviour
         // Calculate spawn position with an offset from the center of the screen
         var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, 0, 0);
         Instantiate(bossPrefab, spawnPosition, enemyBossRotation);
-    }
+		bossHealth.SetActive(true);
+
+
+	}
 
     public void BossDefeated()
     {
-        // Start next level or show victory screen
-    }
+		bossHealth.SetActive(false);
+		// Start next level or show victory screen
+	}
 }

@@ -15,6 +15,7 @@ public class BossEnemyControls : MonoBehaviour
     [SerializeField] private float bulletNSpeed = 5f; // Adjust the speed as needed
     [SerializeField] private float bulletSSpeed = 10f; // Adjust the speed as needed
     private GameObject player;
+    private EnemyBossHealth enemyBossHealth;
 
     
     [SerializeField] private float initialLaserDelay = 10f; // Time before the first laser fires
@@ -22,7 +23,16 @@ public class BossEnemyControls : MonoBehaviour
 
     private void Start()
     {
-        player = PlayerManager.instance.player;
+		// Try to find the EnemyBossHealth component in the Canvas
+		enemyBossHealth = FindObjectOfType<EnemyBossHealth>();
+
+		if (enemyBossHealth == null)
+		{
+			Debug.LogError("EnemyBossHealth component not found in the scene.");
+		}
+
+
+		player = PlayerManager.instance.player;
         objectSize = GetObjectBoundsSize();
         // InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
         // InvokeRepeating("SpawnSpecialBullet", 0f, specialBulletInterval);
@@ -108,7 +118,44 @@ public class BossEnemyControls : MonoBehaviour
         FireLaser(firePointS1);
         FireLaser(firePointS2);
     }
-    private void FireLaser(Transform firePoint)
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("PlayerBullet"))
+		{
+			// Assuming bullets have a script or component that defines the damage they deal
+			Bullet bullet = other.GetComponent<Bullet>();
+            Debug.Log(bullet);
+			if (bullet != null)
+			{
+				int damageAmount = bullet.getDamagePoint(); // Adjust this based on your bullet script
+				Debug.Log(enemyBossHealth);
+
+				enemyBossHealth.TakeDamage(damageAmount);
+			}
+
+			// Instantiate explosion effect
+			// Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+			if (enemyBossHealth.currentHealth <= 0)
+			{
+				// Handle boss defeat here
+				gameObject.SetActive(false); // Or Destroy(gameObject);
+				//SceneManager.LoadScene("VictoryScene");
+			}
+			else
+			{
+				// Handle boss hit but not defeated
+				// Add any additional logic here if needed
+			}
+		}
+		else
+		{
+			Debug.Log("Player Collided with something other than PlayerBullet");
+		}
+	}
+
+	private void FireLaser(Transform firePoint)
     {
         // Instantiate the laser as a child of firePoint
         GameObject laserInstance = Instantiate(specialBulletPrefab, firePoint.position, Quaternion.identity);
@@ -129,10 +176,6 @@ public class BossEnemyControls : MonoBehaviour
             Debug.LogError("LaserController script not found on the instantiated laser prefab.");
         }
     }
-
-
-
-
 
     private Vector3 getPlayerDirection()
     {
@@ -161,7 +204,7 @@ public class BossEnemyControls : MonoBehaviour
         while (true)
         {
             // Play the preparing to fire animation here
-            firePointAnimator.SetTrigger("PrepareToFireBossL1Special");
+            //firePointAnimator.SetTrigger("PrepareToFireBossL1Special");
 
             // Wait for the preparation animation to finish before firing
             // You should adjust the waiting time according to your animation length
