@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
     // private int GameLevel = 0;
     private bool isFlickering = false;
     
+    private easyLevelAudio audioManager; // Reference to easyLevelAudio
+    
     private Camera mainCamera;
     
     
@@ -32,6 +34,11 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main; // Cache the main camera
+        audioManager = FindObjectOfType<easyLevelAudio>();
+        if (audioManager == null)
+        {
+            Debug.LogError("BackgroundAudioManager not found in the scene.");
+        }
     }
 
     void Update()
@@ -42,6 +49,10 @@ public class LevelManager : MonoBehaviour
             StartCoroutine(BossEntrySequence());
 
             bossSpawned = true;
+            if (audioManager != null)
+            {
+                audioManager.PlayBossSpawnAudio(); // Call PlayBossSpawnAudio in easyLevelAudio
+            }
         }
     }
 
