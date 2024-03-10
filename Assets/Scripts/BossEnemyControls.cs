@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 
 public class BossEnemyControls : MonoBehaviour
@@ -37,7 +36,7 @@ public class BossEnemyControls : MonoBehaviour
 
 		player = PlayerManager.instance.player;
 		objectSize = GetObjectBoundsSize();
-		// InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
+		InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
 		// InvokeRepeating("SpawnSpecialBullet", 0f, specialBulletInterval + specialBulletDuration + 1.5f);
 		StartCoroutine(SpecialBulletRoutine());
 	}
