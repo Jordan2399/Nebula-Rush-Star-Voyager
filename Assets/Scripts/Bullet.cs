@@ -75,13 +75,27 @@ public class Bullet : MonoBehaviour
 	{
 		Debug.Log("collision by Player bullet");
 		// Check if the bullet collided with an object tagged as "Enemy"
-		if ((!collision.CompareTag("Enemy") && !collision.CompareTag("EnemyBullet")) || isExploding) return;
-
-		Debug.Log("Player Bullet collided somewhere");
-		// Move the bullet to the collision point
-		transform.position = collision.ClosestPoint(transform.position);
-		Debug.Log("Player Bullet collided somewhere2");
-		PlayExplosionAnimation();
+		// If the bullet is already exploding, don't do anything.
+		if (isExploding)
+		{
+			Debug.Log("Bullet is already exploding.");
+			return;
+		}
+		
+		// If the collided object is an enemy or an enemy bullet, handle the collision.
+		if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet") || collision.CompareTag("Meteors"))
+		{
+			Debug.Log("Player Bullet collided with enemy or enemy bullet.");
+        
+			// Move the bullet to the collision point and play explosion animation.
+			transform.position = collision.ClosestPoint(transform.position);
+			PlayExplosionAnimation();
+		}
+		else
+		{
+			// For any other collision, we're explicitly doing nothing, but you can add any additional logic here if needed.
+			Debug.Log("Collision with non-target object.");
+		}
 	}
 
 

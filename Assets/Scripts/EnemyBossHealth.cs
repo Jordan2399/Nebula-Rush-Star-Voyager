@@ -39,6 +39,7 @@ public class EnemyBossHealth : MonoBehaviour
 
 		if (currentHealth <= 0)
 		{
+			LevelManager.Instance.BossDefeated();
 			// Boss defeated, you can add further logic here like triggering an animation or ending the level
 			Debug.Log("Boss defeated!");
 		}
