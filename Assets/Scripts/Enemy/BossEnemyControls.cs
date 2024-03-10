@@ -36,7 +36,7 @@ public class BossEnemyControls : MonoBehaviour
 
 		player = PlayerManager.instance.player;
 		objectSize = GetObjectBoundsSize();
-		// InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
+		InvokeRepeating("SpawnNormalBullet", 0f, normalBulletInterval);
 		// InvokeRepeating("SpawnSpecialBullet", 0f, specialBulletInterval + specialBulletDuration + 1.5f);
 		StartCoroutine(SpecialBulletRoutine());
 	}
