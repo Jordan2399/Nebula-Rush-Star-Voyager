@@ -96,11 +96,12 @@ public class LevelManager : MonoBehaviour
     private IEnumerator BossEntrySequence()
     {
         // Start the screen flickering effect
-        Animator screenAnimator = screenFlickerAnimator/* Get your Animator reference */;
+        // Animator screenAnimator = screenFlickerAnimator/* Get your Animator reference */;
         // screenAnimator.SetTrigger("StartFlicker");
         // Instantiate the boss off-screen here and animate its entry
         var enemyBossRotation = Quaternion.Euler(0, 0, 90); // Adjust the Euler angles as needed for your prefab
         // Slowly move the boss onto the screen
+        bossHealth.SetActive(true);
         GameObject boss = Instantiate(bossPrefab, GetOffScreenPosition(), enemyBossRotation);
         Coroutine bossEntry = StartCoroutine(AnimateBossEntry(boss));
 
@@ -179,7 +180,6 @@ public class LevelManager : MonoBehaviour
         boss.transform.position = endPosition;
         // Wait a little bit more if you want to ensure the flickering continues for a while after the boss has stopped moving
         yield return new WaitForSecondsRealtime(0.5f); // Adjust as necessary
-        
         // Stop flickering effect
         screenFlickerAnimator.SetBool("IsFlickering", false);
 

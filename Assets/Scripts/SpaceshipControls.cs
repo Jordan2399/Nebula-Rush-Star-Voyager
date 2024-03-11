@@ -12,6 +12,7 @@ public class SpaceshipControls : MonoBehaviour
 
     [SerializeField] private int movingSpeed = 10;
     [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private GameObject shieldObject;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletPrefabL1;
     [SerializeField] private GameObject bulletPrefabL2;
@@ -27,10 +28,11 @@ public class SpaceshipControls : MonoBehaviour
     [SerializeField] private float invincibilityTime = 2.0f;
     private bool isInvincible = false;
     public float invincibilityDuration = 4f; // Default duration for invincibility
-    private float remainingInvincibilityTime = 2f;
+    private float remainingInvincibilityTime = 0f;
     private Coroutine invincibilityCoroutine;
     private bool canReceiveNewShield = true;
     private float shieldPickupCooldown = 0.5f; 
+    private bool pickedUpShieldDuringInvincibility = false;
 
     public HealthBar healthBar;
 
@@ -321,8 +323,13 @@ public class SpaceshipControls : MonoBehaviour
         }
 
         isInvincible = false;
-        // Disable the shield visual
-        // shieldGameObject.SetActive(false);
+        
+        // Check if a shield was picked up during invincibility
+        if (pickedUpShieldDuringInvincibility)
+        {
+            ActivateShield();
+            pickedUpShieldDuringInvincibility = false; // Reset the flag
+        }
     }
 
 
@@ -346,18 +353,29 @@ public class SpaceshipControls : MonoBehaviour
             remainingInvincibilityTime += invincibilityDuration;
             canReceiveNewShield = false;
             StartCoroutine(ShieldPickupCooldownRoutine());
-
-            if (!isInvincible)
+            if (isInvincible)
             {
-                isInvincible = true;
-                if (invincibilityCoroutine != null)
-                {
-                    StopCoroutine(invincibilityCoroutine);
-                }
-                invincibilityCoroutine = StartCoroutine(InvincibilityCountdown());
+                // Set flag that a shield was picked up during invincibility
+                pickedUpShieldDuringInvincibility = true;
+            }
+            else
+            {
+                ActivateShield();
             }
         }
     }
+    
+    private void ActivateShield()
+    {
+        isInvincible = true;
+        shieldObject.SetActive(true);
+        if (invincibilityCoroutine != null)
+        {
+            StopCoroutine(invincibilityCoroutine);
+        }
+        invincibilityCoroutine = StartCoroutine(InvincibilityCountdown());
+    }
+
     private IEnumerator ShieldPickupCooldownRoutine()
     {
         yield return new WaitForSeconds(shieldPickupCooldown);
@@ -384,8 +402,11 @@ public class SpaceshipControls : MonoBehaviour
 
         // After the loop, ensure isInvincible is set to false and cleanup
         isInvincible = false;
+        shieldObject.SetActive(false);
         remainingInvincibilityTime = 0f; // Reset to ensure clean state
         // Additional cleanup or state reset as needed
+        pickedUpShieldDuringInvincibility = false; // Also reset this flag here just in case
+
     }
 
     private IEnumerator ShowMuzzleFlash()

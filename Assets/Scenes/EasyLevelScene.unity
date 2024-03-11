@@ -703,41 +703,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 215421012}
     - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: firePoint
-      value: 
-      objectReference: {fileID: 816428872}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1234696866}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: PlayerLavel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: bullet2Speed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: bullet3Speed
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 8572122261075759781, guid: 007c0da94fbdfab47970e5a519e4cb55, type: 3}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: bulletPrefabL1
-      value: 
-      objectReference: {fileID: 8572122261075759781, guid: ee55934d0b7e242089bcf220e6f3cc74, type: 3}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: bulletPrefabL2
-      value: 
-      objectReference: {fileID: 8572122261075759781, guid: 007c0da94fbdfab47970e5a519e4cb55, type: 3}
-    - target: {fileID: 3160437023532092594, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
-      propertyPath: bulletPrefabL3
-      value: 
-      objectReference: {fileID: 8572122261075759781, guid: afa243df8fd6fd84287915926c1b2e3e, type: 3}
     - target: {fileID: 7404651651293965616, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
       propertyPath: m_Name
       value: PShip
@@ -1237,7 +1205,7 @@ MonoBehaviour:
   lifeIcon: {fileID: 793113628}
   dividerPrefab: {fileID: 6132632773488115599, guid: 65b00f67c2edcef408a3efb4c89f60a7, type: 3}
   dividerContainer: {fileID: 1234696863}
-  maxLives: 6
+  maxLives: 7
   currentLives: 5
 --- !u!1 &1388141028
 GameObject:
@@ -1278,7 +1246,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388141028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e71063d4fea954f49a971b86c4edd7f2, type: 3}
   m_Name: 

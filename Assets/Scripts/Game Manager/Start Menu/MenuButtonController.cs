@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,13 +10,13 @@ public class MenuButtonController : MonoBehaviour
     public int index;
     [SerializeField] bool keyDown;
     [SerializeField] int maxIndex;
-    
+
     // References to AudioSources
     public AudioSource audioSource;
     public AudioSource backgroundMusicSource;
     public AudioSource buttonNavigationSoundSource;
     public AudioSource submitSoundSource;
-    
+
     // Audio clips for background music and button navigation sound
     public AudioClip backgroundMusicClip;
     public AudioClip buttonNavigationSoundClip;
@@ -24,6 +25,7 @@ public class MenuButtonController : MonoBehaviour
     // Reference to the Input Actions
     public InputActionReference navigate;
     public InputActionReference submit;
+    
 
     private void OnEnable()
     {
@@ -58,13 +60,13 @@ public class MenuButtonController : MonoBehaviour
         var navigateValue = navigate.action.ReadValue<Vector2>();
         var submitValue = submit.action.triggered; // Check if the Submit action was triggered this frame
 
-        if(navigateValue.y != 0)
+        if (navigateValue.y != 0)
         {
-            if(!keyDown)
+            if (!keyDown)
             {
                 if (navigateValue.y < 0)
                 {
-                    if(index < maxIndex)
+                    if (index < maxIndex)
                     {
                         index++;
                     }
@@ -73,9 +75,9 @@ public class MenuButtonController : MonoBehaviour
                         index = 0;
                     }
                 }
-                else if(navigateValue.y > 0)
+                else if (navigateValue.y > 0)
                 {
-                    if(index > 0)
+                    if (index > 0)
                     {
                         index--;
                     }
@@ -84,8 +86,9 @@ public class MenuButtonController : MonoBehaviour
                         index = maxIndex;
                     }
                 }
+
                 keyDown = true;
-                
+
                 // Play button navigation sound
                 buttonNavigationSoundSource.PlayOneShot(buttonNavigationSoundClip);
             }
@@ -96,16 +99,19 @@ public class MenuButtonController : MonoBehaviour
         }
 
         // Use the Submit action's triggered state
-        if(submitValue)
+        if (submitValue)
         {
             submitSoundSource.PlayOneShot(submitSoundClip);
             // Perform your submit action here, for example:
-            Debug.Log("Submit action was triggered."+index);
+            Debug.Log("Submit action was triggered." + index);
             // You can call a function or perform an action here.
             if (index == 0)
             {
-                SceneManager.LoadScene("EasyLevelScene");
-                
+                // SceneManager.LoadScene("EasyLevelScene");
+
+                // StartLevelTransition("EasyLevelScene");
+
+                GameManager.Instance.StartLevelTransition("EasyLevelScene");
             }
         }
     }
