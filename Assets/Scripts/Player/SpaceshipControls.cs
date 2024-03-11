@@ -31,13 +31,12 @@ public class SpaceshipControls : MonoBehaviour
     private float remainingInvincibilityTime = 0f;
     private Coroutine invincibilityCoroutine;
     private bool canReceiveNewShield = true;
-    private float shieldPickupCooldown = 0.5f; 
+    private float shieldPickupCooldown = 0.5f;
     private bool pickedUpShieldDuringInvincibility = false;
-
+    [SerializeField] private float bounceForce = 2f;
 
 
     public easyLevelAudio audioManager; // Reference to the easyLevelAudio script
-
 
 
     public HealthBar healthBar;
@@ -109,14 +108,13 @@ public class SpaceshipControls : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("remainingInvincibilityTime:" + remainingInvincibilityTime);
+        // Debug.Log("remainingInvincibilityTime:" + remainingInvincibilityTime);
         moveDirection = move.action.ReadValue<Vector2>();
         if (fire.action.triggered)
         {
             Fire();
             BulletAudio();
         }
-        
     }
 
     private void FixedUpdate()
@@ -252,6 +250,21 @@ public class SpaceshipControls : MonoBehaviour
                 {
                     HandleHarmfulCollision();
                 }
+                else
+                {
+                    Debug.Log("Else condition");
+                    // Make the meteor bounce back
+                    Rigidbody2D meteorRigidbody = other.GetComponent<Rigidbody2D>();
+                    if (meteorRigidbody != null)
+                    {
+                        Debug.Log("Else have rigid condition");
+                        // Calculate the direction to bounce the meteor away from the player
+                        Vector2 bounceDirection = other.transform.position - transform.position;
+                        bounceDirection.Normalize();
+                        // Apply the force
+                        meteorRigidbody.AddForce(bounceDirection * bounceForce, ForceMode2D.Impulse);
+                    }
+                }
 
                 break;
             default:
@@ -336,7 +349,7 @@ public class SpaceshipControls : MonoBehaviour
         }
 
         isInvincible = false;
-        
+
         // Check if a shield was picked up during invincibility
         if (pickedUpShieldDuringInvincibility)
         {
@@ -377,7 +390,7 @@ public class SpaceshipControls : MonoBehaviour
             }
         }
     }
-    
+
     private void ActivateShield()
     {
         isInvincible = true;
@@ -386,6 +399,7 @@ public class SpaceshipControls : MonoBehaviour
         {
             StopCoroutine(invincibilityCoroutine);
         }
+
         invincibilityCoroutine = StartCoroutine(InvincibilityCountdown());
     }
 
@@ -419,7 +433,6 @@ public class SpaceshipControls : MonoBehaviour
         remainingInvincibilityTime = 0f; // Reset to ensure clean state
         // Additional cleanup or state reset as needed
         pickedUpShieldDuringInvincibility = false; // Also reset this flag here just in case
-
     }
 
     private IEnumerator ShowMuzzleFlash()
@@ -428,6 +441,7 @@ public class SpaceshipControls : MonoBehaviour
         yield return new WaitForSeconds(muzzleDisplayTime); // Wait for the specified duration
         muzzleFlashObject.SetActive(false); // Hide the muzzle flash
     }
+
     public void BulletAudio()
     {
         // Play bullet firing audio
