@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
 		// Check if the bullet is already exploding to prevent multiple calls
 		if (isExploding) return;
 
-		Debug.Log("Player Bullet explosion");
+		//Debug.Log("Player Bullet explosion");
 
 		isExploding = true;
 		animator.SetTrigger(ExplosionTriggerName);
@@ -73,19 +73,19 @@ public class Bullet : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log("collision by Player bullet");
+		//Debug.Log("collision by Player bullet");
 		// Check if the bullet collided with an object tagged as "Enemy"
 		// If the bullet is already exploding, don't do anything.
 		if (isExploding)
 		{
-			Debug.Log("Bullet is already exploding.");
+		//	Debug.Log("Bullet is already exploding.");
 			return;
 		}
 		
 		// If the collided object is an enemy or an enemy bullet, handle the collision.
 		if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet") || collision.CompareTag("Meteors"))
 		{
-			Debug.Log("Player Bullet collided with enemy or enemy bullet.");
+		//	Debug.Log("Player Bullet collided with enemy or enemy bullet.");
         
 			// Move the bullet to the collision point and play explosion animation.
 			transform.position = collision.ClosestPoint(transform.position);

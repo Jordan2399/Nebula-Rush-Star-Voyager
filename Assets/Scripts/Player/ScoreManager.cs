@@ -7,7 +7,8 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText; // Assign your TextMeshPro UI element in the Inspector
 
     private int score = 0;
-    private float distanceAccumulator = 0f; // This will accumulate the fractional distance until it exceeds 1
+	private int bulletLevel = 1;
+	private float distanceAccumulator = 0f; // This will accumulate the fractional distance until it exceeds 1
     private bool isBossActive = false; // Added to control score and distance accumulation
     
     private float totalDistance = 0f;
@@ -28,6 +29,7 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         score = 0; // Initialize score to zero
+        bulletLevel = 1;
         UpdateScoreText(); // Update UI
     }
 
@@ -89,5 +91,42 @@ public class ScoreManager : MonoBehaviour
     public float GetTotalDistance()
     {
         return totalDistance;
+    }
+
+	// Save the score to PlayerPrefs
+	public void SaveScore()
+	{
+		PlayerPrefs.SetInt("PlayerScore", score);
+		PlayerPrefs.SetInt("BulletLevel", bulletLevel);
+		PlayerPrefs.Save();
+	}
+
+	public int GetCurrentScore()
+	{
+		return score;
+	}
+
+	public void LoadScorefromPrefs()
+	{
+		score = PlayerPrefs.GetInt("PlayerScore", 0);
+		bulletLevel = PlayerPrefs.GetInt("BulletLevel", 1);
+        Debug.Log("bullet level from load loadScoreFromPrefs" + bulletLevel);
+
+	}
+
+    public void ChangeBulletLevel(int level)
+    {
+        bulletLevel = level;
+        Debug.Log("bullet level from load change bullet level" + bulletLevel);
+
+
+
+	}
+	public int getBulletLevel()
+    {
+        Debug.Log("bullet level from load GetBulletlevel" + bulletLevel);
+
+
+		return bulletLevel;
     }
 }

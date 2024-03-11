@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 226255144695817519}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.91, y: 0.772, z: 0}
+  m_LocalPosition: {x: -2.91, y: 1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  normalBulletPrefab: {fileID: 8572122261075759781, guid: ee55934d0b7e242089bcf220e6f3cc74, type: 3}
+  normalBulletPrefab: {fileID: 8572122261075759781, guid: 849ac922a1449334189422b0e0a09c7a, type: 3}
   specialBulletPrefab: {fileID: 2287664024444800279, guid: 3a2dadfdfdb2efe4a810f7de7b9b0dbe, type: 3}
   normalBulletInterval: 2
   specialBulletInterval: 5
@@ -665,7 +665,7 @@ Transform:
   m_GameObject: {fileID: 4726811796330393095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.91, y: 0.772, z: 0}
+  m_LocalPosition: {x: 2.91, y: 1.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -697,8 +697,8 @@ Transform:
   m_GameObject: {fileID: 5084189514430944099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.72, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 7.87, z: 0}
+  m_LocalScale: {x: 1, y: 1.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3911542386241991337}

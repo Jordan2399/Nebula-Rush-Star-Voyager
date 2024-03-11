@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
+    
     public GameObject bossPrefab;
 	public GameObject bossHealth;// Assign this in the Inspector
 	public float levelDistanceThreshold; // Distance before the boss appears
@@ -16,16 +19,19 @@ public class LevelManager : MonoBehaviour
     private easyLevelAudio audioManager; // Reference to easyLevelAudio
     
     private Camera mainCamera;
-    
-    
-    private void Awake()
+
+    [SerializeField] private int level = 1;
+
+
+	private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        }
-        else
+
+		}
+		else
         {
             Destroy(gameObject);
         }
@@ -39,7 +45,18 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("BackgroundAudioManager not found in the scene.");
         }
-    }
+
+		// Load cumulative score when the game starts
+        if(level == 1)
+        {
+            ScoreManager.Instance.ResetScore();
+        }
+        
+        else
+        {
+		    ScoreManager.Instance.LoadScorefromPrefs();
+        }
+	}
 
     void Update()
     {
@@ -62,14 +79,9 @@ public class LevelManager : MonoBehaviour
         float totalDistance = ScoreManager.Instance.GetTotalDistance(); // This method needs to be implemented in your ScoreManager
 
         // Check if the total distance is greater than or equal to the threshold
-        Debug.Log("Distance travelled: "+totalDistance);
+        //Debug.Log("Distance travelled: "+totalDistance);
         return totalDistance >= levelDistanceThreshold;
     }
-    
-    
-    
-    
-    
     
     // private IEnumerator BossEntrySequence()
     // {
@@ -162,9 +174,7 @@ public class LevelManager : MonoBehaviour
         // Calculate spawn position with an offset from the center of the screen
         var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, 0, 0);
         
-        
-        
-        
+            
         Vector3 startPosition = GetOffScreenPosition();
         Vector3 endPosition = spawnPosition; // Replace with the actual boss position on screen
         float duration = 3f; // Duration of the animation
@@ -197,13 +207,10 @@ public class LevelManager : MonoBehaviour
     }
     
     
-
-
-
     private void SpawnBoss()
     {
-        
-        var enemyBossRenderer = bossPrefab.GetComponent<Renderer>();
+
+		var enemyBossRenderer = bossPrefab.GetComponent<Renderer>();
         
         // Stop the background scroll
         BGScroll bgScroll = FindObjectOfType<BGScroll>();
@@ -238,6 +245,22 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Boss is killed");
 		bossHealth.SetActive(false);
+
+		// Save the current score to PlayerPrefs
+		ScoreManager.Instance.SaveScore();
+
+		//level++;
+
+		if (level == 1)
+		{
+			SceneManager.LoadScene("Level2");
+		}
+		else if (level == 2)
+		{
+			// Load Level 3 or handle the end of the game
+			SceneManager.LoadScene("Level3");
+		}
+
 		// Start next level or show victory screen
 	}
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BossEnemyControls : MonoBehaviour
 {
-	[SerializeField] private float speed = 5f; // Adjust the speed as needed
+	[SerializeField] private float speed = 6f; // Adjust the speed as needed
 	private Vector2 objectSize;
 	[SerializeField] private GameObject normalBulletPrefab;
 	[SerializeField] private GameObject specialBulletPrefab;
@@ -22,7 +22,7 @@ public class BossEnemyControls : MonoBehaviour
 
 	[SerializeField] private float initialLaserDelay = 10f;
 
-
+	//private Transform targetL2;
 	private void Start()
 	{
 		// Try to find the EnemyBossHealth component in the Canvas
@@ -99,6 +99,32 @@ public class BossEnemyControls : MonoBehaviour
 		// Update the boss position
 		transform.position = new Vector3(currentPosition.x, newY, currentPosition.z);
 	}
+	// Set the target player for the enemy to follow
+
+	private void MoveBoss2()
+	{
+		var target = player.transform;
+		if (target is not null)
+		{
+			var currentPosition = transform.position;
+			// Calculate the direction towards the target player
+			Vector2 direction = (target.position - transform.position).normalized;
+
+			direction.x = 0;
+
+			// Move towards the target player
+			transform.Translate(direction * (speed * Time.deltaTime), Space.World);
+
+			// Ensure the enemy is facing the direction of movement
+			//var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+			//transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		}
+	}
+
+
+
+
+
 
 	private void SpawnNormalBullet()
 	{
@@ -200,15 +226,16 @@ public class BossEnemyControls : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		Debug.Log("asdfasdfasdf"+ other.gameObject.name);
 		if (other.CompareTag("PlayerBullet"))
 		{
 			// Assuming bullets have a script or component that defines the damage they deal
 			Bullet bullet = other.GetComponent<Bullet>();
-			Debug.Log(bullet);
+			//Debug.Log(bullet);
 			if (bullet != null)
 			{
 				int damageAmount = bullet.getDamagePoint(); // Adjust this based on your bullet script
-				Debug.Log(enemyBossHealth);
+				Debug.Log("Boss is collided with player bullet"+enemyBossHealth);
 
 				enemyBossHealth.TakeDamage(damageAmount);
 			}

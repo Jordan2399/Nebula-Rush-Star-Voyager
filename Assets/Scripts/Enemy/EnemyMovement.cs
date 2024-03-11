@@ -54,10 +54,10 @@ public class EnemyMovement : MonoBehaviour
         // Check if the object collided with has the tag "PlayerBullet"
         if (collision.CompareTag("PlayerBullet") || collision.CompareTag("Player"))
         {
-            Debug.Log("Player Bullet collided somewhere");
+            //Debug.Log("Player Bullet collided somewhere");
             // Move the bullet to the collision point
             transform.position = collision.ClosestPoint(transform.position);
-            Debug.Log("Player Bullet collided somewhere2");
+            //Debug.Log("Player Bullet collided somewhere2");
             PlayExplosionAnimation();
   
 			// ScoreManager.Instance.AddScore(5);
@@ -75,7 +75,7 @@ public class EnemyMovement : MonoBehaviour
         // Check if the bullet is already exploding to prevent multiple calls
         if (isExploding) return;
 
-        Debug.Log("Player Bullet explosion");
+        //Debug.Log("Player Bullet explosion");
 
         isExploding = true;
         animator.SetTrigger(explosionTriggerName);

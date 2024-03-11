@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemySpaceshipBullet : MonoBehaviour
@@ -11,10 +12,13 @@ public class EnemySpaceshipBullet : MonoBehaviour
 
     private float nextFireTime;
     private GameObject player;
-    [SerializeField] private int scoreForDestroy = 7; 
+    [SerializeField] private int scoreForDestroy = 7;
 
+	private Animator animator;
+	private string explosionTriggerName = "DestroyEnemy"; // The name of the trigger parameter
+	private bool isExploding = false; // To keep track of the explosion state// Reference to the Animator component
 
-    private void Start()
+	private void Start()
     {
         // Find the player in the scene and assign it
         // player = GameObject.FindGameObjectWithTag("Player"); //TODO: better: create a manager that you can access static. Then save the ship as SerializeField. This method you have used is inefficient!
@@ -22,8 +26,13 @@ public class EnemySpaceshipBullet : MonoBehaviour
         // Initialize the nextFireTime
         nextFireTime = Time.time + firingRate;
     }
+	private void Awake()
+	{
+		// Get the Animator component from this GameObject or one of its children
+		animator = GetComponent<Animator>();
+	}
 
-    private void Update()
+	private void Update()
     {
         // Check if it's time to fire
         if (Time.time >= nextFireTime && player && player.activeInHierarchy)
@@ -94,22 +103,71 @@ public class EnemySpaceshipBullet : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the object collided with has the tag "PlayerBullet"
-        if (collision.CompareTag("PlayerBullet"))
-        {
-            // Optionally, you might want to add additional logic here
-            // to handle what happens when the enemy is destroyed.
-            // For example, you could play an explosion effect, increase the player's score, etc.
+		if (collision.CompareTag("PlayerBullet") || collision.CompareTag("Player"))
+		{
+			Debug.Log("Player Bullet collided somewhere");
+			// Move the bullet to the collision point
+			transform.position = collision.ClosestPoint(transform.position);
+			Debug.Log("Player Bullet collided somewhere2");
+			PlayExplosionAnimation();
 
-            // Destroy the enemy object this script is attached to
-            
-            Destroy(gameObject);
-            ScoreManager.Instance.AddPoint(scoreForDestroy);
+			// ScoreManager.Instance.AddScore(5);
+			ScoreManager.Instance.AddPoint(scoreForDestroy);
 
-            // Also, you might want to destroy the bullet to prevent it from continuing through space
-            // Destroy(collision.gameObject);
-        }
-    }
-    
-    
+		}
+	}
+
+
+
+	// Call this function when you want to play the explosion animation
+	private void PlayExplosionAnimation()
+	{
+		// Check if the bullet is already exploding to prevent multiple calls
+		if (isExploding) return;
+
+		Debug.Log("Player Bullet explosion");
+
+		isExploding = true;
+		animator.SetTrigger(explosionTriggerName);
+
+		// Optionally: Disable the collider here
+		var collider = GetComponent<Collider2D>(); //TODO: rename variable and TryGetComponent!
+		if (collider != null)
+		{
+			collider.enabled = false;
+		}
+
+		// Disable the Rigidbody2D to stop any movement
+		var rigidbody2D = GetComponent<Rigidbody2D>(); //TODO: rename variable and TryGetComponent!
+		if (rigidbody2D != null)
+		{
+			rigidbody2D.velocity = Vector2.zero;
+			rigidbody2D.isKinematic = true; // Prevents the Rigidbody from responding to physics
+		}
+
+		// Optional: Change layer or tag to prevent further collisions
+		// gameObject.layer = LayerMask.NameToLayer("Ignore Collisions"); // Make sure the "Ignore Collisions" layer exists and is set to ignore other layers as needed
+
+		// Wait for the animation to finish before destroying the bullet
+		StartCoroutine(WaitForDestructionAnimation());
+	}
+
+
+
+
+
+	// A coroutine to wait for the animation to finish
+	private IEnumerator WaitForDestructionAnimation()
+	{
+		// Wait for the Animator to transition to the explosion state
+		yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("EnemyExplosionAnimation"));
+
+		// Wait for the explosion animation to reach its end
+		yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+
+		// Now you can safely destroy the bullet GameObject
+		Destroy(gameObject);
+	}
+
+
 }

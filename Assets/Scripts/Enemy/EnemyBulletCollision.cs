@@ -60,10 +60,10 @@ public class EnemyBulletCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collision by Player bullet"); 
+       // Debug.Log("collision by Player bullet"); 
         // Check if the bullet collided with an object tagged as "Enemy"
         if ((!collision.CompareTag("Player") && !collision.CompareTag("PlayerBullet")) || isExploding) return;
-        Debug.Log("Enemy Bullet collided somewhere");
+       // Debug.Log("Enemy Bullet collided somewhere");
         // Move the bullet to the collision point
         transform.position = collision.ClosestPoint(transform.position);
         PlayExplosionAnimation();

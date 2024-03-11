@@ -58,7 +58,7 @@ public class SpaceshipControls : MonoBehaviour
     private Vector3 lastPosition;
 
 
-    private ScoreManager scoreManager;
+    //private ScoreManager scoreManager;
 
 
     private void Start()
@@ -73,17 +73,20 @@ public class SpaceshipControls : MonoBehaviour
             audioManager = FindObjectOfType<easyLevelAudio>();
         }
 
+		PlayerLavel=ScoreManager.Instance.getBulletLevel();
+        Debug.Log("Bullet level at Start" + PlayerLavel);
 
-        // Find and cache the PlayerScore script on the player object
-        /** playerScore = FindObjectOfType<PlayerScore>();
+
+		// Find and cache the PlayerScore script on the player object
+		/** playerScore = FindObjectOfType<PlayerScore>();
         if (playerScore == null)
         {
             UnityEngine.Debug.LogError("PlayerScore script not found on the player object!");
         }
         **/
-    }
+	}
 
-    private void Awake()
+	private void Awake()
     {
         animator = GetComponent<Animator>();
         spriteRenderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>(true));
@@ -291,6 +294,7 @@ public class SpaceshipControls : MonoBehaviour
         {
             // Handle player death here
             gameObject.SetActive(false); // Or Destroy(gameObject);
+
             SceneManager.LoadScene("GameOverScene");
         }
         else
@@ -361,9 +365,9 @@ public class SpaceshipControls : MonoBehaviour
 
     private void GetLife()
     {
-        Debug.Log("current life is:" + healthBar.currentLives);
+     //   Debug.Log("current life is:" + healthBar.currentLives);
         healthBar.GainLife();
-        Debug.Log("current life is2:" + healthBar.currentLives);
+      //  Debug.Log("current life is2:" + healthBar.currentLives);
     }
 
     private void GetBullet()
@@ -417,9 +421,13 @@ public class SpaceshipControls : MonoBehaviour
     private void IncreasePlayerLevel()
     {
         PlayerLavel = Mathf.Min(PlayerLavel + 1, 3); // Ensure player level does not exceed max level
-    }
+		ScoreManager.Instance.ChangeBulletLevel(PlayerLavel);
+		Debug.Log("Bullet level at increase" + PlayerLavel);
 
-    private IEnumerator InvincibilityCountdown()
+
+	}
+
+	private IEnumerator InvincibilityCountdown()
     {
         while (remainingInvincibilityTime > 0f)
         {

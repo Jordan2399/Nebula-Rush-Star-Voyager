@@ -99,7 +99,7 @@ public class MeteorSpawn : MonoBehaviour
 		}
 
 		var spawnPosition = new Vector3(mainCamera.transform.position.x + spawnX, spawnY, 0);
-		Debug.Log("Degree is:" + meteorRotation);
+		//Debug.Log("Degree is:" + meteorRotation);
 		
 		// Instantiate meteor
 		var meteor = Instantiate(selectedMeteorPrefab, spawnPosition, meteorRotation);
