@@ -20,7 +20,7 @@ public class SpaceshipControls : MonoBehaviour
     [SerializeField] private float bullet1Speed = 5f;
     [SerializeField] private float bullet2Speed = 5f;
     [SerializeField] private float bullet3Speed = 5f;
-    [SerializeField] private int PlayerLavel = 1;
+    // [SerializeField] private int PlayerLavel = 1;
 
     [SerializeField] private GameObject muzzleFlashObject;
     [SerializeField] private float muzzleDisplayTime = 0.1f; // Time in seconds to display the muzzle flash
@@ -63,6 +63,7 @@ public class SpaceshipControls : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("##########################################################################start ");
         mainCamera = Camera.main;
         objectSize = GetObjectBoundsSize();
         // currentLives = maxLives;
@@ -73,8 +74,8 @@ public class SpaceshipControls : MonoBehaviour
             audioManager = FindObjectOfType<easyLevelAudio>();
         }
 
-		PlayerLavel=ScoreManager.Instance.getBulletLevel();
-        Debug.Log("Bullet level at Start" + PlayerLavel);
+		// PlayerLavel=ScoreManager.Instance.getBulletLevel("level change");
+        Debug.Log("Bullet level at Start" + ScoreManager.Instance.getBulletLevel());
 
 
 		// Find and cache the PlayerScore script on the player object
@@ -179,17 +180,17 @@ public class SpaceshipControls : MonoBehaviour
         // var bullet = new GameObject();
         GameObject bullet;
 
-        if (PlayerLavel == 1)
+        if (ScoreManager.Instance.getBulletLevel() == 1)
         {
             bullet = Instantiate(bulletPrefabL1, firePoint.position, firePoint.rotation);
             SetBulletVelocity(bullet, bullet1Speed);
         }
-        else if (PlayerLavel == 2)
+        else if (ScoreManager.Instance.getBulletLevel() == 2)
         {
             bullet = Instantiate(bulletPrefabL2, firePoint.position, firePoint.rotation);
             SetBulletVelocity(bullet, bullet2Speed);
         }
-        else if (PlayerLavel == 3)
+        else if (ScoreManager.Instance.getBulletLevel() == 3)
         {
             // bullet = Instantiate(bulletPrefabL3, firePoint.position, firePoint.rotation);
 
@@ -415,14 +416,16 @@ public class SpaceshipControls : MonoBehaviour
 
     private void ReducePlayerLevel()
     {
-        PlayerLavel = Mathf.Max(PlayerLavel - 1, 1); // Ensure player level does not go below 1
+        ScoreManager.Instance.reduceBulletLevel();
+        // PlayerLavel = Mathf.Max(PlayerLavel - 1, 1); // Ensure player level does not go below 1
     }
 
     private void IncreasePlayerLevel()
     {
-        PlayerLavel = Mathf.Min(PlayerLavel + 1, 3); // Ensure player level does not exceed max level
-		ScoreManager.Instance.ChangeBulletLevel(PlayerLavel);
-		Debug.Log("Bullet level at increase" + PlayerLavel);
+        ScoreManager.Instance.increaseBulletLevel();
+  //       PlayerLavel = Mathf.Min(PlayerLavel + 1, 3); // Ensure player level does not exceed max level
+		// ScoreManager.Instance.ChangeBulletLevel(PlayerLavel);
+		// Debug.Log("Bullet level at increase" + PlayerLavel);
 
 
 	}

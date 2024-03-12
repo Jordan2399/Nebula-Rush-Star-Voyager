@@ -7,10 +7,10 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText; // Assign your TextMeshPro UI element in the Inspector
 
     private int score = 0;
-	private int bulletLevel = 1;
-	private float distanceAccumulator = 0f; // This will accumulate the fractional distance until it exceeds 1
+    private int bulletLevel = 1;
+    private float distanceAccumulator = 0f; // This will accumulate the fractional distance until it exceeds 1
     private bool isBossActive = false; // Added to control score and distance accumulation
-    
+
     private float totalDistance = 0f;
 
     private void Awake()
@@ -86,47 +86,55 @@ public class ScoreManager : MonoBehaviour
     {
         isBossActive = isActive;
     }
-    
+
     // Method to get the total distance traveled
     public float GetTotalDistance()
     {
         return totalDistance;
     }
 
-	// Save the score to PlayerPrefs
-	public void SaveScore()
-	{
-		PlayerPrefs.SetInt("PlayerScore", score);
-		PlayerPrefs.SetInt("BulletLevel", bulletLevel);
-		PlayerPrefs.Save();
-	}
+    // Save the score to PlayerPrefs
+    public void SaveScore()
+    {
+        PlayerPrefs.SetInt("PlayerScore", score);
+        PlayerPrefs.SetInt("BulletLevel", bulletLevel);
+        Debug.Log("Preferences saved, bullet is:" + PlayerPrefs.GetInt("BulletLevel", 50));
+        PlayerPrefs.Save();
+    }
 
-	public int GetCurrentScore()
-	{
-		return score;
-	}
+    public int GetCurrentScore()
+    {
+        return score;
+    }
 
-	public void LoadScorefromPrefs()
-	{
-		score = PlayerPrefs.GetInt("PlayerScore", 0);
-		bulletLevel = PlayerPrefs.GetInt("BulletLevel", 1);
+    public void LoadScorefromPrefs()
+    {
+        score = PlayerPrefs.GetInt("PlayerScore", 0);
+        bulletLevel = PlayerPrefs.GetInt("BulletLevel", 1);
         Debug.Log("bullet level from load loadScoreFromPrefs" + bulletLevel);
-
-	}
+    }
 
     public void ChangeBulletLevel(int level)
     {
         bulletLevel = level;
         Debug.Log("bullet level from load change bullet level" + bulletLevel);
+    }
 
-
-
-	}
-	public int getBulletLevel()
+    public int getBulletLevel(string ttt = "is null")
     {
-        Debug.Log("bullet level from load GetBulletlevel" + bulletLevel);
+        Debug.Log("bullet level from load GetBulletlevel" + PlayerPrefs.GetInt("BulletLevel", 50));
+        Debug.Log("I am called from getBulletLevel called from:" + ttt + "bulletLevel is:" + bulletLevel);
+        return bulletLevel;
+    }
 
 
-		return bulletLevel;
+    public void reduceBulletLevel()
+    {
+        bulletLevel = Mathf.Max(bulletLevel - 1, 1);
+    }
+
+    public void increaseBulletLevel()
+    {
+        bulletLevel = Mathf.Min(bulletLevel + 1, 3);
     }
 }

@@ -30,7 +30,7 @@ public class EnemyBossHealth : MonoBehaviour
 		UpdateHealthBar();
 	}
 
-	public void TakeDamage(int damageAmount)
+	public void TakeDamage(int damageAmount, GameObject boss)
 	{
 		currentHealth = Mathf.Max(currentHealth - damageAmount, 0); // Ensure health doesn't go below 0
 		Debug.Log("current health is " + currentHealth);
@@ -39,9 +39,10 @@ public class EnemyBossHealth : MonoBehaviour
 
 		if (currentHealth <= 0)
 		{
-			LevelManager.Instance.BossDefeated();
+			// Destroy(boss);
+			LevelManager.Instance.BossDefeated(boss);
 			// Boss defeated, you can add further logic here like triggering an animation or ending the level
-			Debug.Log("Boss defeated!");
+			// Debug.Log("Boss defeated!");
 		}
 	}
 
