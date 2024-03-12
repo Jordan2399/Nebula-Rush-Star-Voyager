@@ -77,5 +77,7 @@ public class ShieldSpwaner : MonoBehaviour
         {
             Debug.LogError("Shield Spawn prefab must have a Rigidbody2D component for velocity control.");
         }
+        Destroy(shield, 10f);
+
     }
 }

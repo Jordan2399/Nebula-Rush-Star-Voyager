@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerBulletPrefab: {fileID: 5452554398591073056, guid: 067bcee1cffc5a0429211d859aae71fd, type: 3}
-  spawnRate: 1
+  spawnRate: 5
 --- !u!114 &392134663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388141028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e71063d4fea954f49a971b86c4edd7f2, type: 3}
   m_Name: 
@@ -1400,6 +1400,7 @@ MonoBehaviour:
   levelDistanceThreshold: 0.001
   screenFlickerAnimator: {fileID: 728212574}
   level: 1
+  isExploding: 0
 --- !u!1 &1609742146
 GameObject:
   m_ObjectHideFlags: 0

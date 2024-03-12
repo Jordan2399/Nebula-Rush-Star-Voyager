@@ -77,5 +77,7 @@ public class HealthSpwaner : MonoBehaviour
 		{
 			Debug.LogError("Health Spawn prefab must have a Rigidbody2D component for velocity control.");
 		}
+		Destroy(health, 10f);
+
 	}
 }

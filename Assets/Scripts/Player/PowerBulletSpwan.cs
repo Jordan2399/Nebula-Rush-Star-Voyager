@@ -76,5 +76,6 @@ public class PowerBulletSpwan : MonoBehaviour
 		{
 			Debug.LogError("Power Bullet prefab must have a Rigidbody2D component for velocity control.");
 		}
+		Destroy(powerBullet, 10f);
 	}
 }

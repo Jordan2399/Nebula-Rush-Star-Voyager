@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     // private Animator animator;
     private string explosionTriggerName = "DestroyEnemy"; // The name of the trigger parameter
-    private bool isExploding = false; // To keep track of the explosion state// Reference to the Animator component
+    public bool isExploding = false; // To keep track of the explosion state// Reference to the Animator component
 
 
     private void Awake()
@@ -213,8 +213,10 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator WaitAndPlayExplosion(GameObject boss)
     {
-            Debug.Log("[WaitAndPlayExplosion] Coroutin is called.");
-        
+        Debug.Log("[WaitAndPlayExplosion] Coroutin is called.");
+        boss.GetComponent<PolygonCollider2D>().enabled = false;
+        // boss.SetActive(false);
+        Debug.Log("collider off");
         if (!isExploding)
         {
             isExploding = true;
@@ -232,17 +234,23 @@ public class LevelManager : MonoBehaviour
 
             // Wait for the explosion state to start playing.
             yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("EnemyExplosionAnimation"));
-            Debug.Log("[WaitAndPlayExplosion] Triggering explosion animation1.");
-
-            // Wait for the explosion state to finish playing.
-            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
-            Debug.Log("[WaitAndPlayExplosion] Triggering explosion animation2.");
-
-            // Allow some time for the explosion to settle before proceeding.
-            yield return new WaitForSeconds(1); // Adjust this delay to match your needs.
-            Debug.Log("[WaitAndPlayExplosion] Triggering explosion animation3.");
+            
+            boss.SetActive(false);
+            yield return new WaitForSeconds(1);
+            // Debug.Log("[WaitAndPlayExplosion] Triggering explosion animation1.");
+            //
+            // // Wait for the explosion state to finish playing.
+            // yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
+            // Debug.Log("[WaitAndPlayExplosion] Triggering explosion animation2.");
+            //
+            // // Allow some time for the explosion to settle before proceeding.
+            // yield return new WaitForSeconds(1); // Adjust this delay to match your needs.
+            // Debug.Log("[WaitAndPlayExplosion] Triggering explosion animation3.");
 
             // Now transition to the next level or perform other actions.
+            // Save the current score to PlayerPrefs
+            ScoreManager.Instance.SaveScore();
+
             if (level == 1)
             {
                 GameManager.Instance.StartLevelTransition("Level2");
@@ -260,9 +268,12 @@ public class LevelManager : MonoBehaviour
             Debug.Log("[WaitAndPlayExplosion] Coroutine finished.");
 
             // Optionally delay the destruction of the boss object to ensure the coroutine has time to perform transitions.
+
             Destroy(boss, 0.1f); // Adjust the delay if necessary to ensure it happens after the transition.
         }
+        // boss.SetActive(false);
 
+        EnemyBossHealth.ResetExplosion();
         Debug.Log("[WaitAndPlayExplosion] Coroutine already running. Exiting early to avoid duplicate execution.");
     }
 
@@ -271,15 +282,11 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Boss is killed");
         Debug.Log("Boss is killed of livel" + level);
-        
-        if (isExploding)
-        {
-            return; // Exit the function if we're already handling the boss's death
-        }
-        
-        bossHealth.SetActive(false);
 
-        StartCoroutine(WaitAndPlayExplosion(boss));
+        if (EnemyBossHealth.IsExploding)
+        {
+            StartCoroutine(WaitAndPlayExplosion(boss));
+        }
 
 
         // Start next level or show victory screen

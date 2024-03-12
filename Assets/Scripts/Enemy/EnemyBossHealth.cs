@@ -11,6 +11,7 @@ public class EnemyBossHealth : MonoBehaviour
 	public int currentHealth; // Change currentLives to currentHealth
 	public Image lifeIcon; // The movable icon
 
+	public static bool IsExploding { get; private set; }
 
 	private void Awake()
 	{
@@ -32,6 +33,7 @@ public class EnemyBossHealth : MonoBehaviour
 
 	public void TakeDamage(int damageAmount, GameObject boss)
 	{
+		if (IsExploding) return;
 		currentHealth = Mathf.Max(currentHealth - damageAmount, 0); // Ensure health doesn't go below 0
 		Debug.Log("current health is " + currentHealth);
 		
@@ -40,12 +42,18 @@ public class EnemyBossHealth : MonoBehaviour
 		if (currentHealth <= 0)
 		{
 			// Destroy(boss);
+			IsExploding = true;
+			gameObject.SetActive(false);
 			LevelManager.Instance.BossDefeated(boss);
 			// Boss defeated, you can add further logic here like triggering an animation or ending the level
 			// Debug.Log("Boss defeated!");
 		}
 	}
-
+	// Call this when the boss is done exploding and ready to be cleaned up
+	public static void ResetExplosion()
+	{
+		IsExploding = false;
+	}
 	private void UpdateHealthBar()
 	{
 		// Update the health fill amount

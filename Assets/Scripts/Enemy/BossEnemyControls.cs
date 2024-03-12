@@ -250,8 +250,8 @@ public class BossEnemyControls : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         currentLife = enemyBossHealth.currentHealth;
-        Debug.Log("asdfasdfasdf" + other.gameObject.name);
-        if (other.CompareTag("PlayerBullet"))
+        Debug.Log("asdfasdfasdf" + LevelManager.Instance.isExploding);
+        if (other.CompareTag("PlayerBullet") && !LevelManager.Instance.isExploding)
         {
             // Assuming bullets have a script or component that defines the damage they deal
             Bullet bullet = other.GetComponent<Bullet>();
@@ -263,9 +263,9 @@ public class BossEnemyControls : MonoBehaviour
 
                 // if (enemyBossHealth.currentHealth == 1)
                 // {
-                    // PlayExplosionAnimation();
-                    // StartCoroutine(WaitAndDestroyBoss()); // Start the coroutine instead of destroying immediately
-                    // StartCoroutine(WaitAndPlayExplosion(damageAmount));
+                // PlayExplosionAnimation();
+                // StartCoroutine(WaitAndDestroyBoss()); // Start the coroutine instead of destroying immediately
+                // StartCoroutine(WaitAndPlayExplosion(damageAmount));
                 // }
                 // else
                 // {
