@@ -1433,7 +1433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 2545321661638938526, guid: b22bfe4100e71ce4da533e005eb0dea0, type: 3}
   bossHealth: {fileID: 1105723783}
-  levelDistanceThreshold: 0.01
+  levelDistanceThreshold: 0.015
   screenFlickerAnimator: {fileID: 728212574}
   level: 1
   isExploding: 0
