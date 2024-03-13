@@ -842,6 +842,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 270860338}
     m_Modifications:
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].x
+      value: -1.8311483
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].y
+      value: -8.121891
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x
+      value: -0.7869592
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].y
+      value: -8.147654
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[8].x
+      value: 2.4032166
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[8].y
+      value: -8.111309
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[9].x
+      value: 3.7914627
+      objectReference: {fileID: 0}
+    - target: {fileID: 671951790489148085, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[9].y
+      value: -3.487855
+      objectReference: {fileID: 0}
     - target: {fileID: 2997074026161883119, guid: 5b309981127be4e9ca6a2bddca7065e5, type: 3}
       propertyPath: scoreText
       value: 
@@ -1397,7 +1433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossPrefab: {fileID: 2545321661638938526, guid: b22bfe4100e71ce4da533e005eb0dea0, type: 3}
   bossHealth: {fileID: 1105723783}
-  levelDistanceThreshold: 0.2
+  levelDistanceThreshold: 0.01
   screenFlickerAnimator: {fileID: 728212574}
   level: 1
   isExploding: 0
