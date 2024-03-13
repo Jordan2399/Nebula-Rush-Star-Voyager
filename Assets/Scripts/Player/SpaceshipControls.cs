@@ -296,8 +296,10 @@ public class SpaceshipControls : MonoBehaviour
             // Handle player death here
             gameObject.SetActive(false); // Or Destroy(gameObject);
 
-            SceneManager.LoadScene("GameOverScene");
-        }
+            //SceneManager.LoadScene("GameOverScene");
+            LevelManager.Instance.PlayerDefeated();
+
+		}
         else
         {
             // Handle player hit but not dead, such as respawning

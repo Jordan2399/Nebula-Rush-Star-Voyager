@@ -293,6 +293,17 @@ public class LevelManager : MonoBehaviour
     }
 
 
+	public void PlayerDefeated()
+	{
+
+			//StartCoroutine(WaitAndPlayExplosion(boss));
+		GameManager.Instance.StartLevelTransition("GameOverScene");
+
+		// Start next level or show victory screen
+	}
+
+
+
     // Call this function when you want to play the explosion animation
     // private void PlayExplosionAnimation(GameObject boss)
     // {

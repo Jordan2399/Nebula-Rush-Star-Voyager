@@ -62,8 +62,17 @@ public class GameManager : MonoBehaviour
             // For Level 1, use the launch animation
             menuCanvas.SetActive(false);
             lunchCanvas.SetActive(true);
-            StartCoroutine(LoadLevelAfterAnimation(levelName));
-        }
+            if (levelName =="GameOverScene")
+            {
+				SceneManager.LoadScene("GameOverScene");
+            }
+            else
+            {
+				StartCoroutine(LoadLevelAfterAnimation(levelName));
+
+			}
+
+		}
         else
         {
             Debug.Log("Boss is killed and go to scene other level:" + levelName);
